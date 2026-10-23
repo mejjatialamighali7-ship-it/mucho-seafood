@@ -64,7 +64,7 @@ export const gallery: GalleryItem[] = [
   {
     src: "/images/langoustines.webp",
     alt: "Plateau de langoustines fraîches alignées, prêtes à être cuisinées",
-    caption: "Langoustines du jour",
+    caption: "Langoustines",
     width: 1000,
     height: 1333,
   },
@@ -134,7 +134,7 @@ export const gallery: GalleryItem[] = [
   {
     src: "/images/espadon.webp",
     alt: "Espadon entier posé sur le comptoir en marbre noir, la salle du restaurant en arrière-plan",
-    caption: "L'espadon, arrivage du jour",
+    caption: "Espadon entier",
     width: 1100,
     height: 1100,
   },
