@@ -13,7 +13,9 @@ export const metadata: Metadata = {
 };
 
 export default function Confidentialite() {
-  const editor = legal.companyName ?? restaurant.brandName;
+  const editor = legal.companyName
+    ? `${legal.companyName}${legal.legalForm ? ` ${legal.legalForm}` : ""} (${restaurant.brandName})`
+    : restaurant.brandName;
   return (
     <PageShell kicker="Informations" title="Confidentialité & RGPD">
       <div className="mx-auto max-w-3xl px-5 py-20 text-[1.02rem] leading-relaxed text-ink/85 sm:px-8 [&_h2]:mt-12 [&_h2]:text-3xl [&_h2]:text-abyss [&_li]:mt-2 [&_p]:mt-4 [&_ul]:mt-4 [&_ul]:list-disc [&_ul]:pl-6 [&_table]:mt-4 [&_td]:border-t [&_td]:border-ink/10 [&_td]:py-3 [&_td]:pr-4 [&_td]:align-top [&_th]:pb-2 [&_th]:pr-4 [&_th]:text-left [&_th]:text-sm [&_th]:font-medium [&_th]:text-muted">

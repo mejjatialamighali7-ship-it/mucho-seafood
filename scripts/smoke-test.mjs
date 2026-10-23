@@ -83,6 +83,8 @@ const videoIds = [...readFileSync(new URL("../src/data/videos.ts", import.meta.u
   const ld = await page.$eval('script[type="application/ld+json"]', (s) => JSON.parse(s.textContent));
   ok(ld.email === "muchosfr@gmail.com", "JSON-LD : e-mail du restaurant");
   ok(ld["@type"] === "Restaurant" && !ld.aggregateRating && !ld.review, "JSON-LD Restaurant sans note ni avis inventés");
+  ok(ld.openingHoursSpecification?.[0]?.opens === "12:30", "JSON-LD : horaires confirmés transmis à Google");
+  ok(!(await page.textContent("body")).includes("à confirmer"), "Accueil : plus de mention « à confirmer »");
   ok((await page.$$("h1")).length === 1, "Un seul H1");
 
   // Toutes les images se chargent
@@ -164,6 +166,12 @@ for (const p of ["/cgu", "/confidentialite", "/mentions-legales"]) {
   const page = await browser.newPage();
   await page.goto(BASE + p, { waitUntil: "networkidle" });
   ok((await page.$$("h1")).length === 1 && (await page.$$("main h2")).length >= 3, `${p} : contenu présent`);
+  const text = await page.textContent("main");
+  ok(!/à compléter/i.test(text), `${p} : aucune mention « À compléter »`);
+  if (p === "/mentions-legales") {
+    const ids = ["Le Beaupré (SARL)", "14427", "002081596000066", "25273799", "Youssef Mejjati Alami"];
+    ok(ids.every((x) => text.includes(x)), "Mentions légales : société, RC, ICE, IF et responsable");
+  }
   await page.close();
 }
 

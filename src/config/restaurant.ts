@@ -35,9 +35,9 @@ export const restaurant = {
       country: "Maroc",
       countryCode: "MA",
     },
-    // Adresse fournie dans le brief et répertoriée sur Restaurant Guru — à confirmer.
-    verified: false,
-    source: "Brief propriétaire + Restaurant Guru",
+    // Confirmée par le propriétaire le 23/10/2026.
+    verified: true,
+    source: "Propriétaire",
   },
 
   /**
@@ -68,15 +68,15 @@ export const restaurant = {
   email: "muchosfr@gmail.com" as string | null,
 
   /**
-   * Horaires. Format 24 h. Les horaires actuels proviennent d'annuaires en ligne.
-   * Passez `verified` à true après confirmation : ils seront alors envoyés à Google.
+   * Horaires. Format 24 h. Confirmés par le propriétaire le 23/10/2026 :
+   * avec `verified: true`, ils sont affichés sans réserve et envoyés à Google.
    */
   hours: {
     value: [
       { days: "Tous les jours", opens: "12:30", closes: "23:00" },
     ] as { days: string; opens: string; closes: string }[],
-    verified: false,
-    source: "Restaurant Guru",
+    verified: true,
+    source: "Propriétaire",
   },
   /** Jours concernés au format Schema.org (utilisé seulement si hours.verified). */
   hoursSchemaDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],

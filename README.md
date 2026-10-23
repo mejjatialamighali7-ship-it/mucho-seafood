@@ -155,19 +155,19 @@ Après la mise en ligne : déclarez `https://votre-domaine/sitemap.xml` dans Goo
 - E-mail du restaurant : muchosfr@gmail.com (donné par le propriétaire le 23/10/2026), affiché dans Contact, le pied de page et les pages légales.
 - Téléphone unique (appel et WhatsApp) 06 61 14 63 09 : confirmé par le propriétaire. Le fixe 05 23 80 08 33 imprimé sur la carte n'est pas le bon et a été retiré.
 - Boutique Mucho El Jadida sur Glovo.
+- Adresse : 1er étage, villa 1, route de Casablanca, El Jadida 24000 (confirmée par le propriétaire le 23/10/2026).
+- Horaires : tous les jours, 12 h 30 – 23 h (confirmés le 23/10/2026, transmis à Google dans les données structurées).
+- Informations légales : Le Beaupré SARL, RC 14427, IF 25273799, ICE 002081596000066, responsable de la publication Youssef Mejjati Alami (donnés par le propriétaire le 23/10/2026).
+- Nom de domaine : https://muchoseafoodrestaurant.ma (acheté chez Cap Connect, branché sur Render, déclaré dans Google Search Console).
 
 **À confirmer**
 
-- Adresse : 1er étage, villa 1, route de Casablanca, El Jadida 24000.
-- Horaires : tous les jours, 12 h 30 – 23 h (affichés « à confirmer », non transmis à Google).
 - Le compte Facebook est indiqué « /mucho » sur la carte : vérifier que facebook.com/mucho est bien la page du restaurant.
 - Identification des plats en photo : Friture Mucho, Linguine aux fruits de mer, Palourdes marinières.
 - Emplacement exact sur Google Maps : à remplacer par les coordonnées GPS dans `mapsQuery`.
 
 **À obtenir**
 
-- Adresse du site (nom de domaine). L'hébergeur est Render (voir section 6).
-- Informations légales : raison sociale, forme juridique, RC, ICE, IF, responsable de publication (affichés « À compléter » dans les mentions légales tant qu'ils manquent).
 - Identifiant Google Analytics (`G-…`) si vous voulez les statistiques de visite.
 - Relecture des CGU et de la page Confidentialité & RGPD (modèles prudents, à faire valider si besoin par votre conseil).
 - Photos en haute définition, notamment de la Grillade mixte et de la Marmite (présentées pour l'instant en version typographique).
