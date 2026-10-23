@@ -88,7 +88,22 @@ Le restaurant ne prend **pas de réservation** : le site n'a aucun formulaire et
 
 ## 5. Déployer
 
-Le plus simple : **Vercel** (gratuit pour ce type de site).
+### Sur Render (hébergement choisi)
+
+Le fichier `render.yaml` décrit déjà le service.
+
+1. Sur dashboard.render.com : « New » puis « Blueprint », connectez GitHub et choisissez le dépôt `mucho-seafood`.
+2. Render lit `render.yaml` : un service web Node à Francfort (le plus proche du Maroc), formule Starter, construit avec `npm ci && npm run build` et lancé avec `npm start`.
+3. Il demande `NEXT_PUBLIC_SITE_URL` : mettez l'adresse définitive du site (ou l'adresse `https://mucho-seafood.onrender.com` en attendant le domaine).
+4. « Apply ». Chaque envoi sur la branche `main` redéploie le site automatiquement.
+5. Nom de domaine : dans le service, « Settings » puis « Custom Domains », ajoutez le domaine et recopiez les enregistrements DNS indiqués chez votre registraire. Mettez ensuite `NEXT_PUBLIC_SITE_URL` à jour et redéployez.
+6. Mettez à jour l'hébergeur dans `src/config/legal.ts` (raison sociale et adresse de Render : voir render.com/terms).
+
+Si vous créez le service à la main (« New » puis « Web Service ») : Runtime Node, Build Command `npm ci && npm run build`, Start Command `npm start`, variable `NODE_VERSION` = `22`.
+
+### Sur Vercel
+
+Alternative gratuite pour ce type de site.
 
 1. Poussez le projet sur GitHub.
 2. Sur vercel.com, « Add New Project », importez le dépôt (Vercel détecte Next.js).

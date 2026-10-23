@@ -1,0 +1,21 @@
+# Déploiement sur Render (Blueprint) : Render lit ce fichier quand on crée
+# le service via « New > Blueprint » et en sélectionnant ce dépôt.
+services:
+  - type: web
+    name: mucho-seafood
+    runtime: node
+    region: frankfurt
+    plan: starter
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
+      # Adresse définitive du site (ex. https://www.mucho-eljadida.ma).
+      # À saisir dans Render ; laissez vide tant qu'il n'y a pas de domaine.
+      - key: NEXT_PUBLIC_SITE_URL
+        sync: false
