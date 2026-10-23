@@ -2,7 +2,7 @@
  * CONFIGURATION CENTRALE DU RESTAURANT
  * ------------------------------------
  * Toutes les informations pratiques du site sont ici : coordonnées, horaires,
- * réseaux sociaux, livraison. Modifiez ce fichier, le site suit.
+ * réseaux sociaux, Glovo. Modifiez ce fichier, le site suit.
  *
  * Convention : chaque information porte un champ `verified`.
  *   - verified: true  → information validée par le restaurant, affichée normalement
@@ -47,15 +47,11 @@ export const restaurant = {
    */
   mapsQuery: "Mucho Seafood, Route de Casablanca, El Jadida, Maroc",
 
-  /** Téléphone principal (fixe) — imprimé sur la carte officielle du restaurant. */
+  /**
+   * Seul numéro du restaurant (appels, WhatsApp, SMS) — confirmé par le propriétaire.
+   * Le fixe imprimé sur la carte (05 23 80 08 33) n'est pas le bon : ne pas le remettre.
+   */
   phone: {
-    value: { display: "05 23 80 08 33", e164: "+212523800833" },
-    verified: true,
-    source: "Carte imprimée du restaurant",
-  },
-
-  /** Portable — transmis par le propriétaire ; reçoit WhatsApp et SMS. */
-  mobile: {
     value: { display: "06 61 14 63 09", e164: "+212661146309" },
     verified: true,
     source: "Propriétaire",
@@ -87,7 +83,7 @@ export const restaurant = {
   services: {
     dineIn: true,
     takeaway: true,
-    delivery: true,
+    delivery: false, // pas de livraison par le restaurant : sur place, à emporter, Glovo
     reservations: false, // le restaurant ne prend pas de réservation
   },
 

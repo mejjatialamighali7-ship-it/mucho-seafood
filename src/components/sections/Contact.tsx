@@ -1,6 +1,6 @@
-import { ArrowUpRight, Navigation, Phone, Clock, MapPin, Bike, MessageCircle } from "lucide-react";
+import { ArrowUpRight, Navigation, Phone, Clock, MapPin, ShoppingBag, MessageCircle } from "lucide-react";
 import { restaurant } from "@/config/restaurant";
-import { telHref, mobileHref, directionsUrl, deliveryUrl, fullAddress, hoursLabel, whatsappHref } from "@/lib/links";
+import { telHref, directionsUrl, deliveryUrl, fullAddress, hoursLabel, whatsappHref } from "@/lib/links";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { MapEmbed } from "./MapEmbed";
@@ -46,12 +46,7 @@ export function Contact() {
                   <a href={telHref} className="link-underline mt-2 inline-block font-serif text-2xl text-abyss">
                     {restaurant.phone.value.display}
                   </a>
-                  <p className="mt-1 text-sm text-muted">
-                    Portable et WhatsApp :{" "}
-                    <a href={mobileHref} className="link-underline text-abyss">
-                      {restaurant.mobile.value.display}
-                    </a>
-                  </p>
+                  <p className="mt-1 text-sm text-muted">Appel et WhatsApp</p>
                 </div>
               </div>
               <div className={row}>
@@ -95,11 +90,11 @@ export function Contact() {
                 className="group mt-12 flex items-center justify-between gap-6 bg-abyss p-7 text-ivory transition-colors hover:bg-ocean"
               >
                 <span className="flex items-center gap-5">
-                  <Bike size={26} strokeWidth={1.4} aria-hidden="true" className="text-copper-light" />
+                  <ShoppingBag size={26} strokeWidth={1.4} aria-hidden="true" className="text-copper-light" />
                   <span>
-                    <span className="block font-serif text-2xl">Mucho à la maison</span>
+                    <span className="block font-serif text-2xl">Mucho sur {restaurant.delivery.provider}</span>
                     <span className="mt-1 block text-sm text-ivory/70">
-                      Commander en livraison sur {restaurant.delivery.provider}
+                      Commandez vos plats via l&apos;application {restaurant.delivery.provider}
                     </span>
                   </span>
                 </span>

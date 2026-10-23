@@ -33,7 +33,7 @@ Les tests fonctionnels vérifient : pages et codes HTTP, liens et ancres, télé
 
 | Je veux modifier… | Fichier |
 | --- | --- |
-| Adresse, téléphone, horaires, WhatsApp, réseaux sociaux, lien de livraison | `src/config/restaurant.ts` |
+| Adresse, téléphone, horaires, WhatsApp, réseaux sociaux, lien Glovo | `src/config/restaurant.ts` |
 | Plats, descriptions, prix, catégories, plats signatures | `src/data/menu.ts` |
 | Photos de la galerie | `src/data/gallery.ts` |
 | Avis clients (vide par défaut) | `src/data/reviews.ts` |
@@ -84,7 +84,7 @@ Le restaurant ne prend **pas de réservation** : le site n'a aucun formulaire et
 
 - **À emporter** : le bloc « À emporter » (ancre `/#emporter`, bouton « Commander à emporter » de la carte, page `/carte`, menu mobile) propose deux boutons : **Commander sur WhatsApp** (message prérempli : commande, nom, heure de retrait) et **Commander par téléphone** (fixe). Composant : `src/components/ui/TakeawayButtons.tsx` ; texte du message : `takeawayWhatsappHref` dans `src/lib/links.ts`.
 - **WhatsApp** : `whatsapp: "212661146309"` dans `src/config/restaurant.ts` (format international sans `+` ni espaces). Il alimente la pastille flottante visible sur toutes les pages (`src/components/layout/WhatsAppBubble.tsx`) et tous les boutons WhatsApp. Mettre `null` les masque.
-- **Livraison** : lien Glovo (`delivery` dans la configuration).
+- **Glovo** : lien vers la boutique Glovo (`delivery` dans la configuration). Le restaurant ne livre pas lui-même : le mot « livraison » n'apparaît pas sur le site.
 
 ## 5. Déployer
 
@@ -123,8 +123,8 @@ Après la mise en ligne : déclarez `https://votre-domaine/sitemap.xml` dans Goo
 - Logo officiel et photos (fournis par le restaurant, dont six publications Instagram).
 - Vue sur l'océan : visible sur les photos officielles.
 - Carte complète et prix : PDF officiel transmis par le propriétaire (il remplace les photos de carte et les prix Glovo utilisés auparavant).
-- Téléphone fixe 05 23 80 08 33, Instagram @muchoseafoodrestaurant, Facebook /mucho : imprimés sur la carte.
-- Portable et WhatsApp 06 61 14 63 09 : confirmé par le propriétaire.
+- Instagram @muchoseafoodrestaurant, Facebook /mucho : imprimés sur la carte.
+- Téléphone unique (appel et WhatsApp) 06 61 14 63 09 : confirmé par le propriétaire. Le fixe 05 23 80 08 33 imprimé sur la carte n'est pas le bon et a été retiré.
 - Boutique Mucho El Jadida sur Glovo.
 
 **À confirmer**

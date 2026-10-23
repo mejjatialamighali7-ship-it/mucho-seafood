@@ -5,7 +5,7 @@ import { WaveLine } from "@/components/ui/WaveLine";
 
 const facts = [
   { icon: Waves, title: "Face à l'océan", text: "Une grande baie vitrée ouverte sur la plage." },
-  { icon: UtensilsCrossed, title: "Sur place, à emporter, livré", text: "La cuisine de la mer, comme vous l'aimez." },
+  { icon: UtensilsCrossed, title: "Sur place, à emporter ou sur Glovo", text: "La cuisine de la mer, comme vous l'aimez." },
   { icon: DoorOpen, title: "Sans réservation", text: "Passez directement, entre amis ou en famille." },
 ];
 

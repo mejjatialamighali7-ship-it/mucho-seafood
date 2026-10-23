@@ -96,9 +96,9 @@ export function Header({ variant = "overlay" }: { variant?: "overlay" | "solid" 
               rel="noopener noreferrer"
               className={`hidden items-center gap-1.5 px-3 text-[0.75rem] font-medium tracking-[0.14em] uppercase md:inline-flex ${textTone} link-underline`}
             >
-              Livraison
+              {restaurant.delivery.provider}
               <ArrowUpRight size={14} aria-hidden="true" />
-              <span className="sr-only">(Glovo, nouvel onglet)</span>
+              <span className="sr-only">(nouvel onglet)</span>
             </a>
           ) : null}
           <Link href="/#contact" className={`btn hidden sm:inline-flex ${solid ? "btn-brand" : "btn-light"}`}>

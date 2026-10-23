@@ -22,7 +22,7 @@ const dmSans = DM_Sans({
 
 const title = "Mucho Seafood — Restaurant de poissons et fruits de mer à El Jadida";
 const description =
-  "Mucho Seafood, restaurant de poissons et fruits de mer face à l'océan, route de Casablanca à El Jadida : fritures, grillades, seafood boil, tajines de la mer. Sur place, à emporter et en livraison.";
+  "Mucho Seafood, restaurant de poissons et fruits de mer face à l'océan, route de Casablanca à El Jadida : fritures, grillades, seafood boil, tajines de la mer. Sur place, à emporter ou sur Glovo.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(restaurant.siteUrl),

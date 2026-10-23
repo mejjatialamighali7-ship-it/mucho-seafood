@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { MessageCircle, Navigation, Phone } from "lucide-react";
 import { restaurant } from "@/config/restaurant";
-import { telHref, mobileHref, hoursLabel, directionsUrl, whatsappHref } from "@/lib/links";
+import { telHref, hoursLabel, directionsUrl, whatsappHref } from "@/lib/links";
 import { Reveal } from "@/components/ui/Reveal";
 import { TakeawayButtons } from "@/components/ui/TakeawayButtons";
 
@@ -61,12 +61,7 @@ export function Visit() {
             <a href={telHref} className="mt-2 inline-block font-serif text-3xl hover:text-sand">
               {restaurant.phone.value.display}
             </a>
-            <p className="mt-2 text-sm text-ivory/70">
-              Portable et WhatsApp :{" "}
-              <a href={mobileHref} className="link-underline text-ivory">
-                {restaurant.mobile.value.display}
-              </a>
-            </p>
+            <p className="mt-2 text-sm text-ivory/70">Appel et WhatsApp</p>
           </div>
           <div>
             <p className="text-[0.7rem] tracking-[0.2em] text-ivory/60 uppercase">Horaires</p>

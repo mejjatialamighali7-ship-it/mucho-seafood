@@ -41,7 +41,7 @@ export default function MentionsLegales() {
         </p>
         <h2>Liens externes</h2>
         <p>
-          Le site renvoie vers des services tiers (Glovo pour la livraison, Google Maps pour l&apos;itinéraire,
+          Le site renvoie vers des services tiers (Glovo pour les commandes en ligne, Google Maps pour l&apos;itinéraire,
           WhatsApp pour nous écrire), soumis à leurs propres conditions.
         </p>
         <p className="text-sm text-muted">Dernière mise à jour : {legal.lastUpdated}</p>

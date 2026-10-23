@@ -33,13 +33,14 @@ ok((await fetch(BASE + "/page-inexistante")).status === 404, "Page inconnue → 
     const id = a.split("#")[1];
     ok(await page.$(`#${id}`), `Ancre ${a} présente`);
   }
-  ok(links.includes("tel:+212523800833"), "Lien téléphone (fixe) cliquable");
+  ok(links.includes("tel:+212661146309"), "Lien téléphone cliquable");
+  ok(!links.includes("tel:+212523800833"), "Ancien fixe absent");
   ok(links.includes("tel:+212661146309"), "Lien portable cliquable");
   ok(links.some((h) => h.startsWith("https://wa.me/212661146309")), "Pastille WhatsApp");
   ok(links.includes("https://www.instagram.com/muchoseafoodrestaurant/"), "Lien Instagram officiel");
   ok(await page.$$eval("#carte [role=tab]", (t) => t.some((x) => x.textContent.includes("Pizzas"))), "Carte : catégorie Pizzas");
   ok(links.some((h) => h.startsWith("https://www.google.com/maps/dir/")), "Lien d'itinéraire");
-  ok(links.some((h) => h.startsWith("https://glovoapp.com/")), "Lien de livraison Glovo");
+  ok(links.some((h) => h.startsWith("https://glovoapp.com/")), "Lien Glovo");
   const ld = await page.$eval('script[type="application/ld+json"]', (s) => JSON.parse(s.textContent));
   ok(ld["@type"] === "Restaurant" && !ld.aggregateRating && !ld.review, "JSON-LD Restaurant sans note ni avis inventés");
   ok((await page.$$("h1")).length === 1, "Un seul H1");
