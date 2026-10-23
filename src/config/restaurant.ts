@@ -64,7 +64,8 @@ export const restaurant = {
    */
   whatsapp: "212661146309" as string | null,
 
-  email: null as string | null,
+  /** Adresse e-mail du restaurant, donnée par le propriétaire le 23/10/2026. */
+  email: "muchosfr@gmail.com" as string | null,
 
   /**
    * Horaires. Format 24 h. Les horaires actuels proviennent d'annuaires en ligne.

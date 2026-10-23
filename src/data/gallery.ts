@@ -1,12 +1,14 @@
 /**
  * GALERIE — photos officielles fournies par le restaurant.
  * Sources : photos fournies par le restaurant (dont six publications Instagram
- * @muchoseafoodrestaurant, recadrées).
+ * @muchoseafoodrestaurant, recadrées, et les photos envoyées le 23/10/2026).
  * Pour ajouter une photo : déposez la source dans assets-src/, ajoutez-la
  * dans scripts/optimize-images.mjs, lancez `npm run images`, puis ajoutez
  * une entrée ici. Les six premières photos occupent la mosaïque éditoriale
  * (dans cet ordre : grande horizontale, verticale, verticale, détail, détail,
- * grande horizontale) ; les suivantes s'ajoutent en grille en dessous.
+ * grande horizontale) ; les suivantes s'ajoutent en grille en dessous (une
+ * dernière rangée incomplète s'élargit pour ne pas laisser de trou : mieux vaut
+ * y placer des photos qui supportent un cadrage horizontal).
  */
 export type GalleryItem = {
   src: string;
@@ -32,11 +34,11 @@ export const gallery: GalleryItem[] = [
     height: 1771,
   },
   {
-    src: "/images/ig-palourdes.webp",
-    alt: "Palourdes ouvertes dans leur jus à l'ail et au persil, quartier de citron",
-    caption: "Palourdes marinières",
+    src: "/images/huitres-oursins.webp",
+    alt: "Assiette d'huîtres creuses et d'oursins ouverts sur glace pilée, sauce cocktail et citron au centre",
+    caption: "Huîtres et oursins",
     width: 1000,
-    height: 1771,
+    height: 1333,
   },
   {
     src: "/images/detail-fauteuil.webp",
@@ -60,11 +62,39 @@ export const gallery: GalleryItem[] = [
     height: 1020,
   },
   {
+    src: "/images/langoustines.webp",
+    alt: "Plateau de langoustines fraîches alignées, prêtes à être cuisinées",
+    caption: "Langoustines du jour",
+    width: 1000,
+    height: 1333,
+  },
+  {
+    src: "/images/ig-palourdes.webp",
+    alt: "Palourdes ouvertes dans leur jus à l'ail et au persil, quartier de citron",
+    caption: "Palourdes marinières",
+    width: 1000,
+    height: 1771,
+  },
+  {
+    src: "/images/salle-en-journee.webp",
+    alt: "La salle de Mucho en journée : tables dressées, fauteuils au dossier damier et baie vitrée sur la plage et les palmiers",
+    caption: "La salle en journée",
+    width: 1440,
+    height: 2560,
+  },
+  {
     src: "/images/ig-friture-assortiment.webp",
     alt: "Grande assiette de friture : poisson entier, filets, calamars, crevettes, croquette et sauce blanche, salade en arrière-plan",
     caption: "Friture de la mer",
     width: 1000,
     height: 1771,
+  },
+  {
+    src: "/images/plateau-poisson-grille.webp",
+    alt: "Grand plateau de poisson entier grillé aux herbes, garni de crevettes, moules et tomates cerises, avec légumes sautés, citron et deux poêlons de purée",
+    caption: "Poisson grillé et fruits de mer",
+    width: 1000,
+    height: 1758,
   },
   {
     src: "/images/friture-mucho.webp",
@@ -74,11 +104,11 @@ export const gallery: GalleryItem[] = [
     height: 1020,
   },
   {
-    src: "/images/ig-friture-aneth.webp",
-    alt: "Friture de poissons et crevettes garnie d'aneth, citron vert et sauce blanche",
-    caption: "Friture à l'aneth",
-    width: 1000,
-    height: 1771,
+    src: "/images/linguine-fruits-de-mer.webp",
+    alt: "Assiette de pâtes aux crevettes et tomates, la plage d'El Jadida et un palmier en arrière-plan",
+    caption: "Pâtes aux fruits de mer, vue sur la plage",
+    width: 765,
+    height: 1020,
   },
   {
     src: "/images/ig-poisson-puree-legumes.webp",
@@ -88,17 +118,24 @@ export const gallery: GalleryItem[] = [
     height: 1025,
   },
   {
-    src: "/images/linguine-fruits-de-mer.webp",
-    alt: "Assiette de pâtes aux crevettes et tomates, la plage d'El Jadida et un palmier en arrière-plan",
-    caption: "Pâtes aux fruits de mer, vue sur la plage",
-    width: 765,
-    height: 1020,
+    src: "/images/ig-friture-aneth.webp",
+    alt: "Friture de poissons et crevettes garnie d'aneth, citron vert et sauce blanche",
+    caption: "Friture à l'aneth",
+    width: 1000,
+    height: 1771,
   },
   {
-    src: "/images/plateau-poisson-grille.webp",
-    alt: "Grand plateau de poisson entier grillé aux herbes, garni de crevettes, moules et tomates cerises, avec légumes sautés, citron et deux poêlons de purée",
-    caption: "Poisson grillé et fruits de mer",
+    src: "/images/araignee-de-mer.webp",
+    alt: "Araignée de mer ouverte, pinces et pattes rouges autour de la carapace, petits pots de mayonnaise",
+    caption: "Araignée de mer",
     width: 1000,
-    height: 1758,
+    height: 1000,
+  },
+  {
+    src: "/images/espadon.webp",
+    alt: "Espadon entier posé sur le comptoir en marbre noir, la salle du restaurant en arrière-plan",
+    caption: "L'espadon, arrivage du jour",
+    width: 1100,
+    height: 1100,
   },
 ];

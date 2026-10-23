@@ -16,14 +16,14 @@ export function Hero() {
     >
       <div className="relative h-[58svh] min-h-[22rem] overflow-hidden lg:order-2 lg:col-span-7 lg:h-auto">
         <Image
-          src="/images/fruits-de-mer-riz-vue-mer.webp"
-          alt="Le Seafood Boil, plat phare de Mucho : crevettes, crabe et moules sur riz, sauce Old Bay, servi face à la plage et à l'océan d'El Jadida"
+          src="/images/salle-baie-vitree.webp"
+          alt="La salle de Mucho : tables nappées de blanc et fauteuils au dossier damier, face à la grande baie vitrée ouverte sur la plage et l'océan d'El Jadida"
           fill
           priority
           fetchPriority="high"
           sizes="(min-width: 1024px) 58vw, 100vw"
           quality={82}
-          className="hero-image object-cover object-[62%_70%] lg:object-[55%_60%]"
+          className="hero-image object-cover object-[50%_88%] lg:object-[50%_42%]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-abyss via-abyss/10 to-abyss/45 lg:bg-gradient-to-r lg:from-abyss lg:via-transparent lg:to-transparent" />
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-abyss/60 to-transparent" />

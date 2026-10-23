@@ -9,7 +9,7 @@ export const legal = {
   ice: null as string | null, // Identifiant commun de l'entreprise
   ifNumber: null as string | null, // Identifiant fiscal
   manager: null as string | null, // Responsable de la publication
-  contactEmail: null as string | null,
+  contactEmail: "muchosfr@gmail.com" as string | null,
   // Hébergeur : Render (render.com/terms), serveurs à Francfort (render.yaml, region: frankfurt).
   host: "Render Services, Inc., 525 Brannan Street, Suite 300, San Francisco, CA 94107, États-Unis. Serveurs situés à Francfort (Allemagne)." as string | null,
   lastUpdated: "2026-10-23",

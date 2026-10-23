@@ -6,6 +6,8 @@ export const fullAddress = `${a.line1}, ${a.street}, ${a.city} ${a.postalCode}, 
 
 export const telHref = `tel:${restaurant.phone.value.e164}`;
 
+export const mailHref = restaurant.email ? `mailto:${restaurant.email}` : null;
+
 export const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
   restaurant.mapsQuery,
 )}`;

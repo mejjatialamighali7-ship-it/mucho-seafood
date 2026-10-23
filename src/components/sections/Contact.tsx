@@ -1,6 +1,6 @@
-import { ArrowUpRight, Phone, Clock, MapPin, ShoppingBag } from "lucide-react";
+import { ArrowUpRight, Phone, Clock, Mail, MapPin, ShoppingBag } from "lucide-react";
 import { restaurant } from "@/config/restaurant";
-import { telHref, deliveryUrl, fullAddress, hoursLabel } from "@/lib/links";
+import { telHref, mailHref, deliveryUrl, fullAddress, hoursLabel } from "@/lib/links";
 import { ActionButtons } from "@/components/ui/ActionButtons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
@@ -50,6 +50,17 @@ export function Contact() {
                   <p className="mt-1 text-sm text-muted">Appel et WhatsApp</p>
                 </div>
               </div>
+              {mailHref ? (
+                <div className={row}>
+                  <Mail size={20} strokeWidth={1.5} className={icon} aria-hidden="true" />
+                  <div className="min-w-0">
+                    <p className="text-[0.7rem] tracking-[0.2em] text-muted uppercase">E-mail</p>
+                    <a href={mailHref} className="link-underline mt-2 inline-block font-serif text-2xl break-all text-abyss">
+                      {restaurant.email}
+                    </a>
+                  </div>
+                </div>
+              ) : null}
               <div className={row}>
                 <Clock size={20} strokeWidth={1.5} className={icon} aria-hidden="true" />
                 <div>

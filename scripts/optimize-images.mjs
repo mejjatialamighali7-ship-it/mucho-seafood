@@ -76,9 +76,59 @@ await sharp(masked)
   .png({ palette: true, compressionLevel: 9 })
   .toFile("src/app/icon.png");
 
-// Image de partage (Open Graph) 1200×630 à partir de la photo principale.
-await sharp(`${SRC}/fruits-de-mer-riz-vue-mer.png`)
-  .resize(1200, 630, { fit: "cover", position: "centre" })
+// Photos envoyées par le restaurant le 23/10/2026 (JPG, orientation iPhone respectée).
+const photos = [
+  // Photo principale de l'accueil, sans le haut du plafond (jamais visible à l'écran).
+  { name: "salle-baie-vitree", width: 1206, region: { left: 0, top: 460, width: 1206, height: 1674 } },
+  { name: "salle-en-journee", width: 1440 },
+  { name: "espadon", width: 1100 },
+  { name: "huitres-oursins", width: 1000 },
+  { name: "langoustines", width: 1000 },
+  // Recadrée en carré pour retirer le sol et la chaussure visibles en bas de la photo.
+  { name: "araignee-de-mer", width: 1000, region: { left: 0, top: 540, width: 3024, height: 3024 } },
+  // Capture d'écran : on ne garde que le panneau bleu aux poissons dorés.
+  { name: "mucho-poissons-dores", width: 960, region: { left: 0, top: 545, width: 960, height: 990 } },
+];
+for (const p of photos) {
+  let img = sharp(`${SRC}/${p.name}.jpg`).rotate();
+  if (p.region) img = img.extract(p.region);
+  await img
+    .resize({ width: p.width, withoutEnlargement: true })
+    .webp({ quality: 80, effort: 6 })
+    .toFile(`${OUT}/${p.name}.webp`);
+}
+
+/** Détoure une image : `alphaOf(r, g, b)` renvoie l'opacité (0–255) de chaque pixel. */
+async function cutOut(input, alphaOf, rgbOf = (r, g, b) => [r, g, b]) {
+  const { data, info } = await input.removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  const out = Buffer.alloc(info.width * info.height * 4);
+  for (let i = 0; i < info.width * info.height; i++) {
+    const [r, g, b] = [data[i * 3], data[i * 3 + 1], data[i * 3 + 2]];
+    out.set([...rgbOf(r, g, b), alphaOf(r, g, b)], i * 4);
+  }
+  return sharp(out, { raw: { width: info.width, height: info.height, channels: 4 } }).trim();
+}
+const ramp = (v, from, to) => Math.max(0, Math.min(255, Math.round((255 * (v - from)) / (to - from))));
+
+// Autocollant « Eat with your hands » : le fond bleu est rendu transparent.
+const sticker = await cutOut(
+  sharp(`${SRC}/eat-with-your-hands.jpg`).extract({ left: 0, top: 566, width: 960, height: 1130 }),
+  (r, g, b) => ramp(Math.hypot(r - 37, g - 61, b - 133), 45, 75),
+);
+await sticker.webp({ quality: 85, alphaQuality: 90 }).toFile(`${OUT}/eat-with-your-hands.webp`);
+
+// Emblème « gouvernail » de la carte imprimée, en blanc sur fond transparent.
+const emblem = await cutOut(
+  sharp(`${SRC}/emblem-gouvernail.jpg`),
+  (r, g, b) => 255 - ramp(0.299 * r + 0.587 * g + 0.114 * b, 62, 82),
+  () => [255, 255, 255],
+);
+await emblem.webp({ quality: 90, alphaQuality: 100 }).toFile(`${OUT}/emblem-gouvernail.webp`);
+
+// Image de partage (Open Graph) 1200×630 : la salle face à l'océan.
+await sharp(`${SRC}/salle-baie-vitree.jpg`)
+  .rotate()
+  .extract({ left: 3, top: 800, width: 1200, height: 630 })
   .jpeg({ quality: 82, mozjpeg: true })
   .toFile("public/og-image.jpg");
 
@@ -89,7 +139,8 @@ console.log("Images optimisées dans", OUT);
 // Gardez cette liste identique à VARIANTS dans src/lib/image-loader.ts.
 const VARIANTS = [480, 828];
 const { readdir } = await import("node:fs/promises");
-const variantName = /-\d+\.webp$/;
+// Ne pas nommer une photo « nom-480 » ou « nom-828 » : elle serait prise pour une variante.
+const variantName = new RegExp(`-(${VARIANTS.join("|")})\\.webp$`);
 for (const file of await readdir(OUT)) {
   if (!file.endsWith(".webp") || variantName.test(file)) continue;
   for (const w of VARIANTS) {

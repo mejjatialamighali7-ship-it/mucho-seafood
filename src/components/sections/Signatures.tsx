@@ -7,6 +7,11 @@ import { WaveLine } from "@/components/ui/WaveLine";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
+/** Autocollant posé sur la photo d'un plat signature (par identifiant de plat). */
+const stickers: Record<string, { src: string; alt: string; width: number; height: number }> = {
+  "seafood-boil": { src: "/images/eat-with-your-hands.webp", alt: "Eat with your hands", width: 844, height: 697 },
+};
+
 /**
  * Plats signatures : ceux marqués `signature: true` dans src/data/menu.ts.
  * Le premier plat avec photo est mis en scène en grand ; les autres prennent
@@ -21,7 +26,7 @@ export function Signatures() {
     <section
       id="signatures"
       aria-labelledby="signatures-title"
-      className="pattern-damier relative bg-abyss py-24 text-ivory sm:py-32 lg:py-40"
+      className="pattern-damier relative overflow-x-clip bg-abyss py-24 text-ivory sm:py-32 lg:py-40"
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
@@ -40,15 +45,29 @@ export function Signatures() {
 
         {hero ? (
           <article className="mt-16 grid items-center gap-10 lg:mt-24 lg:grid-cols-12 lg:gap-16">
-            <Reveal variant="image" className="relative aspect-[4/5] overflow-hidden lg:col-span-6">
-              <Image
-                src={hero.image!}
-                alt={hero.imageAlt ?? hero.name}
-                fill
-                sizes="(min-width: 1024px) 45vw, 100vw"
-                className="parallax-soft object-cover"
-              />
-            </Reveal>
+            <div className="relative lg:col-span-6">
+              <Reveal variant="image" className="relative aspect-[4/5] overflow-hidden">
+                <Image
+                  src={hero.image!}
+                  alt={hero.imageAlt ?? hero.name}
+                  fill
+                  sizes="(min-width: 1024px) 45vw, 100vw"
+                  className="parallax-soft object-cover"
+                />
+              </Reveal>
+              {stickers[hero.id] ? (
+                <Reveal delay={400} className="absolute -right-2 -bottom-10 w-40 rotate-[-7deg] sm:-right-4 sm:w-52 lg:-right-14 lg:w-56">
+                  <Image
+                    src={stickers[hero.id].src}
+                    alt={stickers[hero.id].alt}
+                    width={stickers[hero.id].width}
+                    height={stickers[hero.id].height}
+                    sizes="(min-width: 1024px) 224px, (min-width: 640px) 208px, 160px"
+                    className="h-auto w-full drop-shadow-[0_18px_30px_rgba(0,0,0,0.45)]"
+                  />
+                </Reveal>
+              ) : null}
+            </div>
             <div className="lg:col-span-5 lg:col-start-8">
               <Reveal as="p" className="font-serif text-7xl leading-none text-copper-light/80 italic">
                 {pad(1)}

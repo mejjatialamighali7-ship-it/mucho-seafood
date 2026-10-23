@@ -4,6 +4,7 @@ import { MobileActionBar } from "@/components/layout/MobileActionBar";
 import { Hero } from "@/components/sections/Hero";
 import { Universe } from "@/components/sections/Universe";
 import { Signatures } from "@/components/sections/Signatures";
+import { Videos } from "@/components/sections/Videos";
 import { MenuSection } from "@/components/sections/MenuSection";
 import { Gallery } from "@/components/sections/Gallery";
 import { Reviews } from "@/components/sections/Reviews";
@@ -23,6 +24,7 @@ export default function Home() {
         <Hero />
         <Universe />
         <Signatures />
+        <Videos />
         <MenuSection />
         <Gallery />
         <Reviews />

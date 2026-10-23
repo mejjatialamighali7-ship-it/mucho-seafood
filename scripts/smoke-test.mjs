@@ -1,6 +1,7 @@
 // Tests fonctionnels de bout en bout.
 // Usage : npm run build && npm start (dans un autre terminal), puis
 //         BASE_URL=http://localhost:3000 npm run test:e2e
+import { readFileSync } from "node:fs";
 import { chromium } from "playwright";
 
 const BASE = process.env.BASE_URL ?? "http://localhost:3000";
@@ -40,13 +41,29 @@ ok((await fetch(BASE + "/page-inexistante")).status === 404, "Page inconnue → 
   }
 }
 
+// Vidéos : fichiers servis par morceaux (indispensable pour Safari / iPhone)
+const videoIds = [...readFileSync(new URL("../src/data/videos.ts", import.meta.url), "utf8").matchAll(/id: "([a-z-]+)"/g)].map((m) => m[1]);
+{
+  let allOk = videoIds.length > 0;
+  for (const id of videoIds) {
+    const [v, poster] = await Promise.all([fetch(`${BASE}/videos/${id}.mp4`, { headers: { Range: "bytes=0-1023" } }), fetch(`${BASE}/videos/${id}.webp`)]);
+    if (v.status !== 206 || v.headers.get("content-type") !== "video/mp4" || poster.status !== 200) allOk = false;
+  }
+  ok(allOk, `Vidéos et images d'attente disponibles (${videoIds.length})`);
+}
+
 // Liens internes et ancres
 {
   const page = await browser.newPage();
+  const mp4Requests = [];
+  page.on("request", (r) => r.url().endsWith(".mp4") && mp4Requests.push(r.url()));
   const errors = [];
   page.on("pageerror", (e) => errors.push(String(e)));
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
   await page.goto(BASE + "/", { waitUntil: "networkidle" });
+  ok(mp4Requests.length === 0, "Aucune vidéo téléchargée à l'ouverture de la page");
+  const videoAttrs = await page.$$eval("#videos video", (vs) => vs.map((v) => v.muted && v.playsInline && v.preload === "none"));
+  ok(videoAttrs.length === videoIds.length && videoAttrs.every(Boolean), "Vidéos muettes, lues dans la page, chargées à la demande");
   const links = await page.$$eval("a[href]", (as) => as.map((a) => a.getAttribute("href")));
   ok(!links.some((h) => h === "#" || h === ""), "Aucun lien vide ou « # »");
   const anchors = [...new Set(links.filter((h) => h.startsWith("/#") || h.startsWith("#")))];
@@ -62,7 +79,9 @@ ok((await fetch(BASE + "/page-inexistante")).status === 404, "Page inconnue → 
   ok(await page.$$eval("#carte [role=tab]", (t) => t.some((x) => x.textContent.includes("Pizzas"))), "Carte : catégorie Pizzas");
   ok(links.some((h) => h.startsWith("https://www.google.com/maps/dir/")), "Lien d'itinéraire");
   ok(links.some((h) => h.startsWith("https://glovoapp.com/")), "Lien Glovo");
+  ok(links.includes("mailto:muchosfr@gmail.com"), "Lien e-mail muchosfr@gmail.com");
   const ld = await page.$eval('script[type="application/ld+json"]', (s) => JSON.parse(s.textContent));
+  ok(ld.email === "muchosfr@gmail.com", "JSON-LD : e-mail du restaurant");
   ok(ld["@type"] === "Restaurant" && !ld.aggregateRating && !ld.review, "JSON-LD Restaurant sans note ni avis inventés");
   ok((await page.$$("h1")).length === 1, "Un seul H1");
 

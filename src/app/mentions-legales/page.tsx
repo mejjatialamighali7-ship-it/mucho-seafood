@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { PageShell } from "@/components/layout/PageShell";
 import { restaurant } from "@/config/restaurant";
 import { legal } from "@/config/legal";
-import { fullAddress } from "@/lib/links";
+import { fullAddress, mailHref } from "@/lib/links";
 
 export const metadata: Metadata = {
   title: "Mentions légales",
@@ -23,6 +23,14 @@ export default function MentionsLegales() {
           {fullAddress}
           <br />
           Téléphone : {restaurant.phone.value.display}
+          {mailHref ? (
+            <>
+              {" "}· E-mail :{" "}
+              <a href={mailHref} className="link-underline text-abyss">
+                {restaurant.email}
+              </a>
+            </>
+          ) : null}
           <br />
           RC : {v(legal.rc)} · ICE : {v(legal.ice)} · IF : {v(legal.ifNumber)}
           <br />

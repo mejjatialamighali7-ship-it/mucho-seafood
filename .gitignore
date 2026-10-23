@@ -5,3 +5,6 @@ out
 .env
 *.tsbuildinfo
 next-env.d.ts
+
+# Vidéos brutes (lourdes) : seules les versions compressées de public/videos/ sont versionnées
+assets-src/videos/

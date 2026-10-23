@@ -30,10 +30,10 @@ export function Universe() {
             className="absolute -bottom-10 right-4 w-[38%] max-w-[15rem] overflow-hidden border-[6px] border-ivory shadow-[0_24px_60px_rgba(11,22,49,0.25)] sm:right-8 lg:-right-10"
           >
             <Image
-              src="/images/detail-fauteuil.webp"
-              alt="Détail du tissu à motif de cubes bleu marine et blanc des fauteuils"
-              width={340}
-              height={300}
+              src="/images/mucho-poissons-dores.webp"
+              alt="Le décor de Mucho : le nom en lettres dorées au-dessus d'un banc de poissons dorés sur fond bleu marine"
+              width={960}
+              height={990}
               sizes="240px"
               className="h-auto w-full"
             />

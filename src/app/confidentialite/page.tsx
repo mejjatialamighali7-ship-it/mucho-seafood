@@ -27,7 +27,15 @@ export default function Confidentialite() {
         <h2>Responsable du traitement</h2>
         <p>
           {editor}, {fullAddress}. Téléphone et WhatsApp : {restaurant.phone.value.display}
-          {legal.contactEmail ? `, e-mail : ${legal.contactEmail}` : ""}.
+          {legal.contactEmail ? (
+            <>
+              , e-mail :{" "}
+              <a href={`mailto:${legal.contactEmail}`} className="link-underline text-abyss">
+                {legal.contactEmail}
+              </a>
+            </>
+          ) : null}
+          .
         </p>
 
         <h2>Ce que le site collecte</h2>
@@ -115,7 +123,15 @@ export default function Confidentialite() {
           Vous pouvez demander l&apos;accès à vos données, leur rectification, leur effacement, vous opposer à leur
           traitement ou en demander la limitation, et retirer votre consentement à tout moment. Contactez le restaurant
           au {restaurant.phone.value.display}
-          {legal.contactEmail ? ` ou à ${legal.contactEmail}` : ""}. Si vous estimez que vos droits ne sont pas
+          {legal.contactEmail ? (
+            <>
+              {" "}ou à{" "}
+              <a href={`mailto:${legal.contactEmail}`} className="link-underline text-abyss">
+                {legal.contactEmail}
+              </a>
+            </>
+          ) : null}
+          . Si vous estimez que vos droits ne sont pas
           respectés, vous pouvez saisir la CNDP (Commission nationale de contrôle de la protection des données à
           caractère personnel, Maroc) ou, si vous résidez dans l&apos;Union européenne, l&apos;autorité de protection
           des données de votre pays (en France : la CNIL).

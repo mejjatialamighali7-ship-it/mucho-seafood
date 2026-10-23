@@ -49,7 +49,7 @@ const nextConfig: NextConfig = {
       // La CSP bloquerait le rechargement à chaud en développement.
       { source: "/:path*", headers: isProd ? securityHeaders : securityHeaders.slice(1) },
       {
-        source: "/images/:file*",
+        source: "/:dir(images|videos)/:file*",
         headers: [{ key: "Cache-Control", value: "public, max-age=2592000, stale-while-revalidate=86400" }],
       },
       {

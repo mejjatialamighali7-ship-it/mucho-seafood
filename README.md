@@ -27,7 +27,7 @@ npm run build && npm start   # puis, dans un autre terminal :
 BASE_URL=http://localhost:3000 npm run test:e2e   # tests fonctionnels (Playwright)
 ```
 
-Les tests fonctionnels vérifient : pages et codes HTTP (dont CGU, confidentialité, favicon, manifeste), redirection /rgpd, sitemap, en-têtes de sécurité (HSTS, CSP, anti-iframe), titre, description et image de partage de chaque page, liens et ancres, numéro unique, absence du mot « livraison », un seul bloc d'action (Itinéraire, WhatsApp, Appeler), chargement des images et photo allégée sur téléphone, onglets de la carte au clavier, visionneuse photo, bandeau cookies (si Google Analytics est configuré), plan Google Maps autorisé, menu mobile, absence de débordement horizontal de 320 à 1920 px, données structurées sans note ni avis inventés. Si Playwright n'a pas de navigateur : `npx playwright install chromium`.
+Les tests fonctionnels vérifient : pages et codes HTTP (dont CGU, confidentialité, favicon, manifeste), redirection /rgpd, sitemap, en-têtes de sécurité (HSTS, CSP, anti-iframe), titre, description et image de partage de chaque page, liens et ancres, numéro unique, lien e-mail, vidéos (disponibles, servies par morceaux pour l'iPhone, aucune téléchargée à l'ouverture de la page), absence du mot « livraison », un seul bloc d'action (Itinéraire, WhatsApp, Appeler), chargement des images et photo allégée sur téléphone, onglets de la carte au clavier, visionneuse photo, bandeau cookies (si Google Analytics est configuré), plan Google Maps autorisé, menu mobile, absence de débordement horizontal de 320 à 1920 px, données structurées sans note ni avis inventés. Si Playwright n'a pas de navigateur : `npx playwright install chromium`.
 
 ## 2. Où modifier quoi
 
@@ -75,12 +75,26 @@ Toute la carte vient de la **carte officielle** transmise par le restaurant (PDF
 Les photos sources sont dans `assets-src/` (fichiers d'origine fournis par le restaurant). Le script `npm run images` les convertit en WebP optimisés dans `public/images/`, en trois largeurs (`photo.webp`, `photo-828.webp`, `photo-480.webp`) : le téléphone télécharge automatiquement la plus légère qui suffit (chargeur `src/lib/image-loader.ts`, aucun calcul côté serveur). Il recrée aussi les icônes (`src/app/icon.png`, `apple-icon.png`, `favicon.ico`) et l'image de partage (`public/og-image.jpg`).
 
 1. Déposez la nouvelle photo dans `assets-src/` (PNG ou JPG, le plus grand format possible : 2000 px de large ou plus est idéal).
-2. Pour remplacer une photo existante, gardez le même nom de fichier. Pour en ajouter une, ajoutez-la dans la liste `jobs` de `scripts/optimize-images.mjs`.
+2. Pour remplacer une photo existante, gardez le même nom de fichier. Pour en ajouter une, ajoutez-la dans `scripts/optimize-images.mjs` (liste `jobs` pour les PNG, liste `photos` pour les JPG de téléphone, avec un recadrage `region` si besoin). Évitez les noms finissant par « -480 » ou « -828 », réservés aux versions allégées.
 3. Lancez `npm run images`.
 4. Pour la galerie, ajoutez une entrée dans `src/data/gallery.ts` (chemin, texte alternatif, légende, dimensions).
 5. Pour illustrer un plat, ajoutez `image` et `imageAlt` au plat dans `src/data/menu.ts`.
 
-Photos actuellement utilisées : logo officiel, salle avec vue sur l'océan, Friture Mucho, pâtes aux fruits de mer vue plage, **Seafood Boil** face à l'océan (fichier `fruits-de-mer-riz-vue-mer`, photo d'accueil et plat phare des signatures), plateau de poisson grillé et fruits de mer (`plateau-poisson-grille`, envoyé le 23/10/2026), six photos Instagram du restaurant (captures recadrées, préfixe `ig-` : linguine, palourdes, poisson grillé, poisson-purée-légumes, deux fritures), plus un recadrage « détail » (tissu des fauteuils). Les photos de la carte imprimée sont gardées dans `assets-src/` pour référence. Les photos actuelles font 765 à 1360 px de large : des photos en plus haute définition rendront l'accueil encore plus net sur grand écran.
+Photos actuellement utilisées : logo officiel ; **la salle face à la baie vitrée et à la mer** (`salle-baie-vitree`, photo principale de l'accueil et image de partage, envoyée le 23/10/2026) ; salle avec vue sur l'océan (`salle-vue-mer`, section « Notre univers ») et salle en journée (`salle-en-journee`) ; le décor aux poissons dorés (`mucho-poissons-dores`, en incrustation dans « Notre univers ») ; **Seafood Boil** face à l'océan (`fruits-de-mer-riz-vue-mer`, plat phare des signatures, avec l'autocollant « Eat with your hands » détouré dans `eat-with-your-hands`) ; l'emblème au gouvernail (`emblem-gouvernail`, en filigrane dans le pied de page) ; huîtres et oursins, langoustines, araignée de mer, espadon (envoyés le 23/10/2026) ; Friture Mucho ; pâtes aux fruits de mer vue plage ; plateau de poisson grillé et fruits de mer ; six photos Instagram du restaurant (préfixe `ig-`) ; un recadrage « détail » (tissu des fauteuils). Les photos de la carte imprimée sont gardées dans `assets-src/` pour référence.
+
+### Vidéos
+
+La section « De la vitrine à la table » affiche les vidéos de `public/videos/` (liste et légendes dans `src/data/videos.ts`). Chaque vidéo est compressée en 540 × 960 px, sans son, environ 1 Mo, avec une image d'attente `.webp` du même nom. Rien n'est téléchargé avant que le visiteur arrive sur la section ; chaque vidéo démarre quand elle est à l'écran et s'arrête quand elle en sort ; un toucher met en pause ou relance. Pas de lecture automatique si le visiteur a demandé moins d'animations ou le mode économie de données.
+
+Pour ajouter une vidéo (format vertical de préférence) :
+
+```bash
+ffmpeg -i source.mp4 -t 12 -vf "crop='min(iw,ih*9/16)':'min(ih,iw*16/9)',scale=540:960:flags=lanczos,fps=30,format=yuv420p" \
+  -c:v libx264 -preset slow -crf 28 -profile:v high -level 4.0 -movflags +faststart -an public/videos/nom.mp4
+ffmpeg -ss 0.4 -i public/videos/nom.mp4 -frames:v 1 -c:v libwebp -quality 75 public/videos/nom.webp
+```
+
+puis ajoutez `{ id: "nom", caption: "Légende" }` dans `src/data/videos.ts`. Les vidéos brutes se rangent dans `assets-src/videos/`, qui n'est pas envoyé sur GitHub (trop lourd).
 
 ## 4. Pas de réservation : sur place, à emporter, WhatsApp
 
@@ -138,6 +152,7 @@ Après la mise en ligne : déclarez `https://votre-domaine/sitemap.xml` dans Goo
 - Vue sur l'océan : visible sur les photos officielles.
 - Carte complète et prix : PDF officiel transmis par le propriétaire (il remplace les photos de carte et les prix Glovo utilisés auparavant).
 - Instagram @muchoseafoodrestaurant, Facebook /mucho : imprimés sur la carte.
+- E-mail du restaurant : muchosfr@gmail.com (donné par le propriétaire le 23/10/2026), affiché dans Contact, le pied de page et les pages légales.
 - Téléphone unique (appel et WhatsApp) 06 61 14 63 09 : confirmé par le propriétaire. Le fixe 05 23 80 08 33 imprimé sur la carte n'est pas le bon et a été retiré.
 - Boutique Mucho El Jadida sur Glovo.
 
@@ -151,8 +166,8 @@ Après la mise en ligne : déclarez `https://votre-domaine/sitemap.xml` dans Goo
 
 **À obtenir**
 
-- Adresse du site (nom de domaine) et hébergeur.
-- Informations légales : raison sociale, forme juridique, RC, ICE, IF, responsable de publication, e-mail de contact (affichés « À compléter » dans les mentions légales tant qu'ils manquent).
+- Adresse du site (nom de domaine). L'hébergeur est Render (voir section 6).
+- Informations légales : raison sociale, forme juridique, RC, ICE, IF, responsable de publication (affichés « À compléter » dans les mentions légales tant qu'ils manquent).
 - Identifiant Google Analytics (`G-…`) si vous voulez les statistiques de visite.
 - Relecture des CGU et de la page Confidentialité & RGPD (modèles prudents, à faire valider si besoin par votre conseil).
 - Photos en haute définition, notamment de la Grillade mixte et de la Marmite (présentées pour l'instant en version typographique).
@@ -163,13 +178,14 @@ Après la mise en ligne : déclarez `https://votre-domaine/sitemap.xml` dans Goo
 ```
 assets-src/             photos d'origine (non publiées telles quelles)
 public/images/          photos optimisées WebP (générées)
+public/videos/          vidéos compressées et leurs images d'attente
 scripts/                optimisation des images, tests fonctionnels
 src/app/                pages : accueil, /carte, mentions légales, confidentialité, sitemap, robots
 src/components/layout/  en-tête, pied de page, barre d'actions mobile
 src/components/sections/ sections de l'accueil
 src/components/ui/      éléments réutilisables
 src/config/             informations du restaurant et mentions légales
-src/data/               carte, galerie, avis
+src/data/               carte, galerie, vidéos, avis
 src/lib/                liens (téléphone, itinéraire, SMS, WhatsApp), données structurées
 ```
 

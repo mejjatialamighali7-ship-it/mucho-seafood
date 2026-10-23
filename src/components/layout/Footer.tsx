@@ -1,10 +1,11 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { ManageCookiesButton } from "@/components/layout/CookieConsent";
 import { gaId } from "@/config/analytics";
 import { restaurant } from "@/config/restaurant";
-import { navLinks, telHref, fullAddress, deliveryUrl, directionsUrl, hoursLabel } from "@/lib/links";
+import { navLinks, telHref, mailHref, fullAddress, deliveryUrl, directionsUrl, hoursLabel } from "@/lib/links";
 
 const socialLabels: Record<string, string> = {
   instagram: "Instagram",
@@ -17,7 +18,16 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="pattern-damier relative bg-abyss pb-28 text-ivory md:pb-0">
+    <footer className="pattern-damier relative isolate overflow-hidden bg-abyss pb-28 text-ivory md:pb-0">
+      {/* Emblème du gouvernail, en filigrane */}
+      <Image
+        src="/images/emblem-gouvernail.webp"
+        alt=""
+        width={883}
+        height={671}
+        sizes="(min-width: 1024px) 560px, 320px"
+        className="pointer-events-none absolute -top-6 -right-28 -z-10 w-80 opacity-[0.05] select-none sm:w-[26rem] lg:top-1/2 lg:-right-44 lg:w-[38rem] lg:-translate-y-1/2"
+      />
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-12 sm:px-8 lg:pt-28">
         <div className="grid gap-14 lg:grid-cols-12">
           <div className="lg:col-span-4">
@@ -57,6 +67,13 @@ export function Footer() {
 {" "}
                 <span className="text-ivory/50">(appel et WhatsApp)</span>
               </p>
+              {mailHref ? (
+                <p>
+                  <a href={mailHref} className="link-underline hover:text-ivory">
+                    {restaurant.email}
+                  </a>
+                </p>
+              ) : null}
               <p>
                 <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className="link-underline inline-flex items-center gap-1 hover:text-ivory">
                   Itinéraire <ArrowUpRight size={14} aria-hidden="true" />

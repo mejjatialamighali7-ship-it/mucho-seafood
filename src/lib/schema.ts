@@ -18,9 +18,10 @@ export function restaurantJsonLd() {
     name: r.brandName,
     alternateName: r.name,
     url,
-    image: [`${url}/og-image.jpg`, `${url}/images/salle-vue-mer.webp`],
+    image: [`${url}/og-image.jpg`, `${url}/images/salle-baie-vitree.webp`, `${url}/images/salle-vue-mer.webp`],
     logo: `${url}/images/logo-mucho.webp`,
     telephone: r.phone.value.e164,
+    ...(r.email ? { email: r.email } : {}),
     servesCuisine: ["Poissons", "Fruits de mer", "Cuisine marocaine"],
     address: {
       "@type": "PostalAddress",

@@ -17,8 +17,28 @@ const slots = [
   "col-span-2 aspect-[4/3] lg:aspect-auto lg:col-[4/10] lg:row-[2/4]",
 ];
 
-const sizesFor = (i: number) =>
-  i === 0 || i === 5 ? "(min-width: 1024px) 60vw, 100vw" : "(min-width: 1024px) 33vw, 50vw";
+/**
+ * Sous la mosaïque, grille de 3 colonnes (2 sur mobile). Une dernière rangée
+ * incomplète s'élargit : 2 photos sur desktop → moitié chacune ; 1 photo → pleine largeur.
+ */
+const extra = gallery.length - slots.length;
+const lgRest = extra > 0 ? extra % 3 : 0;
+const wideOnMobile = (k: number) => extra % 2 === 1 && k === extra - 1;
+const wideOnLg = (k: number) => lgRest > 0 && k >= extra - lgRest;
+const gridCell = (i: number) => {
+  const k = i - slots.length;
+  return [
+    wideOnMobile(k) ? "col-span-2 aspect-[4/3]" : "aspect-[4/5]",
+    wideOnLg(k) ? (lgRest === 2 ? "lg:col-span-6 lg:aspect-[4/3]" : "lg:col-span-12 lg:aspect-[21/9]") : "lg:col-span-4 lg:aspect-[4/5]",
+    "lg:row-auto",
+  ].join(" ");
+};
+const sizesFor = (i: number) => {
+  if (i === 0 || i === 5) return "(min-width: 1024px) 60vw, 100vw";
+  const k = i - slots.length;
+  const lg = k >= 0 && wideOnLg(k) ? (lgRest === 2 ? "50vw" : "100vw") : "33vw";
+  return `(min-width: 1024px) ${lg}, ${k >= 0 && wideOnMobile(k) ? "100vw" : "50vw"}`;
+};
 
 export function Gallery() {
   const [index, setIndex] = useState<number | null>(null);
@@ -79,7 +99,7 @@ export function Gallery() {
               variant="image"
               key={g.src}
               delay={(i % 3) * 120}
-              className={`relative overflow-hidden ${slots[i] ?? "aspect-[4/5] lg:col-span-4 lg:row-auto lg:aspect-[4/5]"}`}
+              className={`relative overflow-hidden ${slots[i] ?? gridCell(i)}`}
             >
               <button
                 type="button"
