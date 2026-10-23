@@ -61,7 +61,7 @@ Toute la carte vient de la **carte officielle** transmise par le restaurant (PDF
 - **Ajouter un plat** : copiez une ligne dans la bonne catégorie et changez `id` (unique) et `name`.
 - **Retirer un plat** : supprimez la ligne, ou ajoutez `available: false` pour le masquer temporairement.
 - **Changer un prix** : modifiez le nombre dans `dh(…)`. `from(235)` affiche « dès 235 Dh ».
-- **Plusieurs tailles** : `variants: [{ label: "1/2 P", price: dh(235) }, …]` (utilisé pour le Seafood Boil).
+- **Plusieurs tailles** : `variants: [{ label: "1 à 2 pers.", price: dh(235) }, …]` (utilisé pour le Seafood Boil).
 - **Intertitres** : `group: "Jus frais"` range un plat sous un intertitre ; `note` sur une catégorie affiche une mention (ex. « Garnitures selon l'humeur du chef »).
 - **Plat signature** : `signature: true` le place dans la section « Plats signatures ». Le premier plat signature qui a une photo est mis en scène en grand.
 - **Nouvelle carte** : remplacez `public/carte-mucho.pdf` (lien « Télécharger la carte ») et mettez à jour `menu.ts`.
@@ -116,7 +116,6 @@ Après la mise en ligne : déclarez `https://votre-domaine/sitemap.xml` dans Goo
 
 - Adresse : 1er étage, villa 1, route de Casablanca, El Jadida 24000.
 - Horaires : tous les jours, 12 h 30 – 23 h (affichés « à confirmer », non transmis à Google).
-- Seafood Boil : la carte indique « 1/2 P » et « 3/4 P ». Le site reprend ces libellés tels quels ; à préciser s'il s'agit du nombre de personnes (1 à 2, 3 à 4).
 - Le compte Facebook est indiqué « /mucho » sur la carte : vérifier que facebook.com/mucho est bien la page du restaurant.
 - Identification des plats en photo : Friture Mucho, Linguine aux fruits de mer, Palourdes marinières.
 - Emplacement exact sur Google Maps : à remplacer par les coordonnées GPS dans `mapsQuery`.
