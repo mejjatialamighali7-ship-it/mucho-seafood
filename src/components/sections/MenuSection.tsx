@@ -17,7 +17,7 @@ export function MenuSection() {
   return (
     <section id="carte" aria-labelledby="carte-title" className="bg-ivory-deep/60 py-24 sm:py-32 lg:py-40">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+        <div className="flex flex-col gap-10 xl:flex-row xl:items-end xl:justify-between">
           <SectionHeading
             id="carte-title"
             kicker="La carte"
@@ -28,8 +28,11 @@ export function MenuSection() {
             }
             intro="Fritures, grillades, seafood boil, tajines de la mer, coquillages, pâtes et pizzas : un aperçu de la carte, à parcourir par envie."
           />
-          <Reveal delay={200} className="flex flex-col gap-3 sm:flex-row">
-            <Link href="/carte" className="btn btn-brand">
+          <Reveal delay={200} className="flex shrink-0 flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <Link href="/#emporter" className="btn btn-brand">
+              Commander à emporter
+            </Link>
+            <Link href="/carte" className="btn btn-ghost-dark">
               Carte complète
               <ArrowRight size={16} aria-hidden="true" />
             </Link>
@@ -61,14 +64,14 @@ export function MenuSection() {
 
         <p className="mt-16 max-w-2xl border-t border-ink/10 pt-6 text-sm leading-relaxed text-muted">
           {anyPrice
-            ? "Prix en dirhams. Les prix non indiqués vous sont communiqués au restaurant et par téléphone. "
+            ? "Prix en dirhams. "
             : "Les prix vous sont communiqués au restaurant et par téléphone. "}
           La carte peut évoluer et certains plats peuvent ne pas être disponibles.
           {officialMenuUrl ? (
             <>
               {" "}
               <a href={officialMenuUrl} target="_blank" rel="noopener noreferrer" className="link-underline text-abyss">
-                Consulter la carte officielle
+                Télécharger la carte (PDF)
               </a>
               .
             </>

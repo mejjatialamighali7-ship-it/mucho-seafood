@@ -18,22 +18,10 @@ export default function Confidentialite() {
           traitement des données à caractère personnel.
         </p>
         <h2>Données collectées</h2>
-        <p>Le site ne collecte des données que lorsque vous remplissez le formulaire de réservation :</p>
-        <ul>
-          <li>nom, numéro de téléphone ;</li>
-          <li>date, heure et nombre de personnes souhaités ;</li>
-          <li>votre éventuelle demande particulière.</li>
-        </ul>
-        <h2>Utilisation</h2>
         <p>
-          Ces informations servent uniquement à traiter votre demande de réservation et à vous recontacter pour la
-          confirmer. Elles ne sont ni vendues ni utilisées à des fins publicitaires.
-        </p>
-        <h2>Transmission</h2>
-        <p>
-          Selon la configuration du site, votre demande est transmise au restaurant par message (WhatsApp ou SMS, depuis
-          votre propre téléphone) ou par un service d&apos;automatisation sécurisé. Elle est conservée le temps
-          nécessaire au traitement de la réservation.
+          Le site ne comporte aucun formulaire et ne collecte aucune donnée personnelle. Si vous nous écrivez sur
+          WhatsApp ou nous appelez, votre message est traité directement par le restaurant, uniquement pour vous
+          répondre ; il n&apos;est ni vendu ni utilisé à des fins publicitaires.
         </p>
         <h2>Cookies et services tiers</h2>
         <p>
@@ -42,7 +30,7 @@ export default function Confidentialite() {
         </p>
         <h2>Vos droits</h2>
         <p>
-          Vous pouvez demander l&apos;accès, la rectification ou la suppression de vos données en contactant le
+          Pour toute question sur vos données, ou pour en demander l&apos;accès, la rectification ou la suppression, contactez le
           restaurant au {restaurant.phone.value.display}
           {legal.contactEmail ? ` ou à ${legal.contactEmail}` : ""}.
         </p>

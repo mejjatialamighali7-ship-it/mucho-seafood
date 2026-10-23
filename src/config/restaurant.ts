@@ -2,7 +2,7 @@
  * CONFIGURATION CENTRALE DU RESTAURANT
  * ------------------------------------
  * Toutes les informations pratiques du site sont ici : coordonnées, horaires,
- * réseaux sociaux, réservation, livraison. Modifiez ce fichier, le site suit.
+ * réseaux sociaux, livraison. Modifiez ce fichier, le site suit.
  *
  * Convention : chaque information porte un champ `verified`.
  *   - verified: true  → information validée par le restaurant, affichée normalement
@@ -64,7 +64,7 @@ export const restaurant = {
   /**
    * Numéro WhatsApp (format international sans espaces ni « + »).
    * Confirmé par le propriétaire le 23/10/2026. Active la pastille flottante
-   * et l'envoi des demandes de réservation sur WhatsApp. Mettre null pour désactiver.
+   * et les boutons WhatsApp. Mettre null pour désactiver.
    */
   whatsapp: "212661146309" as string | null,
 
@@ -88,7 +88,7 @@ export const restaurant = {
     dineIn: true,
     takeaway: true,
     delivery: true,
-    reservations: true,
+    reservations: false, // le restaurant ne prend pas de réservation
   },
 
   /** Réseaux sociaux officiels — ajoutez uniquement des comptes vérifiés. */
@@ -106,22 +106,6 @@ export const restaurant = {
     // La page Glovo existe ; elle indiquait l'établissement « fermé actuellement »
     // lors de la vérification du 23/10/2026. À confirmer auprès du restaurant.
     verified: false,
-  },
-
-  reservation: {
-    /**
-     * Si RESERVATION_WEBHOOK_URL est défini côté serveur, le formulaire envoie
-     * la demande à ce webhook. Sinon, il prépare un message WhatsApp (si un
-     * numéro est configuré) ou un SMS vers le téléphone du restaurant.
-     */
-    maxGuests: 20,
-    /** Créneaux proposés dans le formulaire (doivent rester dans les horaires). */
-    timeSlots: [
-      "12:30", "13:00", "13:30", "14:00", "14:30", "15:00",
-      "15:30", "16:00", "16:30", "17:00", "17:30", "18:00",
-      "18:30", "19:00", "19:30", "20:00", "20:30", "21:00",
-      "21:30", "22:00",
-    ],
   },
 
   /** Faits confirmés par les photos officielles fournies par le restaurant. */

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowUpRight, CalendarDays } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { TakeawayButtons } from "@/components/ui/TakeawayButtons";
 import { PageShell } from "@/components/layout/PageShell";
 import { DishList } from "@/components/ui/DishList";
 import { publishedMenu, officialMenuUrl } from "@/data/menu";
@@ -62,7 +62,7 @@ export default function CartePage() {
         <div className="mt-16 flex flex-col gap-8 border-t border-ink/10 pt-10 lg:flex-row lg:items-center lg:justify-between">
           <p className="max-w-xl text-sm leading-relaxed text-muted">
             {anyPrice
-              ? "Prix en dirhams. Les prix non indiqués vous sont communiqués au restaurant et par téléphone. "
+              ? "Prix en dirhams. "
               : "Les prix vous sont communiqués au restaurant et par téléphone. "}
             La carte peut évoluer et certains plats peuvent ne pas être disponibles. Allergies ou régime particulier :
             parlez-en à l&apos;équipe.
@@ -70,17 +70,14 @@ export default function CartePage() {
               <>
                 {" "}
                 <a href={officialMenuUrl} target="_blank" rel="noopener noreferrer" className="link-underline text-abyss">
-                  Carte officielle
+                  Télécharger la carte (PDF)
                 </a>
                 .
               </>
             ) : null}
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Link href="/#reserver" className="btn btn-brand">
-              <CalendarDays size={16} aria-hidden="true" />
-              Réserver une table
-            </Link>
+            <TakeawayButtons />
             {deliveryUrl ? (
               <a href={deliveryUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-dark">
                 Commander sur {restaurant.delivery.provider}

@@ -52,7 +52,7 @@ export function DishList({ dishes, note, headingLevel = 3 }: { dishes: Dish[]; n
               }`}
             >
               {items.map((d) => {
-                const price = formatPrice(d.price);
+                const price = d.variants ? null : formatPrice(d.price);
                 return (
                   <li key={d.id} className="group">
                     <div className="flex items-baseline gap-4">
@@ -66,6 +66,15 @@ export function DishList({ dishes, note, headingLevel = 3 }: { dishes: Dish[]; n
                         </>
                       ) : null}
                     </div>
+                    {d.variants ? (
+                      <ul className="mt-2 flex flex-wrap gap-x-6 gap-y-1">
+                        {d.variants.map((v) => (
+                          <li key={v.label} className="text-sm text-muted">
+                            {v.label} <span className="ml-1 font-serif text-xl text-copper-ink">{formatPrice(v.price)}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
                     {d.description ? <p className="mt-1.5 max-w-md text-[0.93rem] leading-relaxed text-muted">{d.description}</p> : null}
                   </li>
                 );

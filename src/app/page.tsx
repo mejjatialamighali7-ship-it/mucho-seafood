@@ -7,7 +7,7 @@ import { Signatures } from "@/components/sections/Signatures";
 import { MenuSection } from "@/components/sections/MenuSection";
 import { Gallery } from "@/components/sections/Gallery";
 import { Reviews } from "@/components/sections/Reviews";
-import { Reservation } from "@/components/sections/Reservation";
+import { Visit } from "@/components/sections/Visit";
 import { Contact } from "@/components/sections/Contact";
 import { restaurantJsonLd } from "@/lib/schema";
 
@@ -26,7 +26,7 @@ export default function Home() {
         <MenuSection />
         <Gallery />
         <Reviews />
-        <Reservation />
+        <Visit />
         <Contact />
       </main>
       <Footer />

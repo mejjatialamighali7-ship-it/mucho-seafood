@@ -2,13 +2,12 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Phone, Navigation, CalendarDays } from "lucide-react";
+import { Phone, Navigation, BookOpen } from "lucide-react";
 import { telHref, directionsUrl } from "@/lib/links";
 
 /**
  * Barre d'actions mobile : apparaît après la photo d'accueil,
- * se retire sur le formulaire de réservation et près du pied de page
- * pour ne jamais masquer de contenu utile.
+ * se retire près du pied de page pour ne jamais masquer de contenu utile.
  */
 export function MobileActionBar() {
   const [visible, setVisible] = useState(false);
@@ -17,9 +16,7 @@ export function MobileActionBar() {
     const onScroll = () => {
       const y = window.scrollY;
       const nearBottom = window.innerHeight + y > document.documentElement.scrollHeight - 160;
-      const resa = document.getElementById("reserver")?.getBoundingClientRect();
-      const onResa = resa ? resa.top < window.innerHeight && resa.bottom > 0 : false;
-      setVisible(y > window.innerHeight * 0.6 && !nearBottom && !onResa);
+      setVisible(y > window.innerHeight * 0.6 && !nearBottom);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -55,9 +52,9 @@ export function MobileActionBar() {
           </a>
         </li>
         <li className="flex flex-1">
-          <Link href="/#reserver" className={`${item} rounded-r-full bg-mucho`} tabIndex={visible ? 0 : -1}>
-            <CalendarDays size={18} aria-hidden="true" />
-            Réserver
+          <Link href="/#carte" className={`${item} rounded-r-full bg-mucho`} tabIndex={visible ? 0 : -1}>
+            <BookOpen size={18} aria-hidden="true" />
+            La carte
           </Link>
         </li>
       </ul>

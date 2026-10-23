@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Menu, X, Phone, ArrowUpRight } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
-import { navLinks, telHref, deliveryUrl, fullAddress } from "@/lib/links";
+import { navLinks, telHref, deliveryUrl, fullAddress, takeawayWhatsappHref } from "@/lib/links";
 import { restaurant } from "@/config/restaurant";
 
 /**
@@ -101,8 +101,8 @@ export function Header({ variant = "overlay" }: { variant?: "overlay" | "solid" 
               <span className="sr-only">(Glovo, nouvel onglet)</span>
             </a>
           ) : null}
-          <Link href="/#reserver" className={`btn hidden sm:inline-flex ${solid ? "btn-brand" : "btn-light"}`}>
-            Réserver une table
+          <Link href="/#contact" className={`btn hidden sm:inline-flex ${solid ? "btn-brand" : "btn-light"}`}>
+            Nous trouver
           </Link>
           <button
             ref={toggleRef}
@@ -147,9 +147,14 @@ export function Header({ variant = "overlay" }: { variant?: "overlay" | "solid" 
             </ul>
           </nav>
           <div className="mt-auto space-y-3 pt-10">
-            <Link href="/#reserver" onClick={() => setOpen(false)} className="btn btn-light w-full">
-              Réserver une table
+            <Link href="/#contact" onClick={() => setOpen(false)} className="btn btn-light w-full">
+              Nous trouver
             </Link>
+            {takeawayWhatsappHref ? (
+              <a href={takeawayWhatsappHref} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-light w-full">
+                À emporter sur WhatsApp
+              </a>
+            ) : null}
             {deliveryUrl ? (
               <a href={deliveryUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-light w-full">
                 Commander sur {restaurant.delivery.provider}

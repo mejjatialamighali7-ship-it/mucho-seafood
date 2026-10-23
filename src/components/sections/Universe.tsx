@@ -1,12 +1,12 @@
 import Image from "next/image";
-import { Waves, UtensilsCrossed, CalendarCheck } from "lucide-react";
+import { Waves, UtensilsCrossed, DoorOpen } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 import { WaveLine } from "@/components/ui/WaveLine";
 
 const facts = [
   { icon: Waves, title: "Face à l'océan", text: "Une grande baie vitrée ouverte sur la plage." },
   { icon: UtensilsCrossed, title: "Sur place, à emporter, livré", text: "La cuisine de la mer, comme vous l'aimez." },
-  { icon: CalendarCheck, title: "Sur réservation", text: "Pour une table entre amis ou en famille." },
+  { icon: DoorOpen, title: "Sans réservation", text: "Passez directement, entre amis ou en famille." },
 ];
 
 export function Universe() {

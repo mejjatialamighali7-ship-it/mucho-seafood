@@ -62,8 +62,8 @@ export function Hero() {
             Découvrir la carte
             <ArrowRight size={16} aria-hidden="true" />
           </Link>
-          <Link href="/#reserver" className="btn btn-ghost-light">
-            Réserver une table
+          <Link href="/#contact" className="btn btn-ghost-light">
+            Nous trouver
           </Link>
         </div>
 

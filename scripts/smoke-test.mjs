@@ -12,7 +12,7 @@ const ok = (cond, label) => {
   if (!cond) failures++;
 };
 
-const pages = ["/", "/carte", "/mentions-legales", "/confidentialite", "/sitemap.xml", "/robots.txt"];
+const pages = ["/", "/carte", "/mentions-legales", "/confidentialite", "/sitemap.xml", "/robots.txt", "/carte-mucho.pdf"];
 for (const p of pages) {
   const res = await fetch(BASE + p);
   ok(res.status === 200, `GET ${p} → ${res.status}`);
@@ -70,20 +70,10 @@ ok((await fetch(BASE + "/page-inexistante")).status === 404, "Page inconnue → 
   await page.keyboard.press("Escape");
   ok(!(await page.$("dialog[open]")), "Visionneuse : fermeture avec Échap");
 
-  // Réservation : validation puis message prérempli
-  await page.click('form button[type="submit"]');
-  ok(await page.isVisible("#resa-name-error"), "Réservation : erreurs affichées si champs vides");
-  await page.fill("#resa-name", "Test Mucho");
-  await page.fill("#resa-phone", "06 12 34 56 78");
-  const tomorrow = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
-  await page.fill("#resa-date", tomorrow);
-  await page.selectOption("#resa-time", "20:00");
-  await page.selectOption("#resa-guests", "4");
-  await page.click('form button[type="submit"]');
-  const send = await page.waitForSelector('a[href^="sms:"], a[href^="https://wa.me/"]', { timeout: 3000 }).catch(() => null);
-  const href = send ? await send.getAttribute("href") : "";
-  ok(href.startsWith("https://wa.me/212661146309"), "Réservation : envoi sur WhatsApp au bon numéro");
-  ok(href && decodeURIComponent(href).includes("Test Mucho") && decodeURIComponent(href).includes("4"), "Réservation : message prérempli (SMS/WhatsApp)");
+  ok(!(await page.$('a[href="/#reserver"], #reserver, form')), "Aucun formulaire ni bouton de réservation");
+  ok(await page.$("#emporter"), "Bloc « À emporter » présent");
+  ok(links.some((h) => h.startsWith("https://wa.me/212661146309?text=") && decodeURIComponent(h).includes("emporter")), "À emporter : WhatsApp prérempli");
+  ok(await page.$$eval("#carte [role=tab]", (t) => t.some((x) => x.textContent.includes("Seafood Boil"))), "Carte : Seafood Boil");
 
   ok(errors.length === 0, `Aucune erreur console${errors.length ? " — " + errors.join(" | ") : ""}`);
   await page.close();
@@ -105,12 +95,6 @@ for (const width of [360, 390, 768, 1024, 1440]) {
     ok(!(await page.isVisible("#menu-mobile")), `${width}px : menu mobile fermé avec Échap`);
   }
   await page.close();
-}
-
-// API de réservation
-{
-  const res = await fetch(BASE + "/api/reservation", { method: "POST", body: "{}", headers: { "Content-Type": "application/json" } });
-  ok([503, 422].includes(res.status), `API réservation sans webhook ou invalide → ${res.status}`);
 }
 
 await browser.close();

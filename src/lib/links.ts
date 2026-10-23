@@ -39,3 +39,8 @@ export const navLinks = [
 
 export const hoursLabel = (h: { opens: string; closes: string }) =>
   `${h.opens.replace(":", " h ")} – ${h.closes.replace(":", " h ")}`.replace(/ h 00/g, " h");
+
+/** Message prérempli pour commander à emporter sur WhatsApp. */
+export const takeawayWhatsappHref = whatsappHref(
+  "Bonjour Mucho, je souhaite commander à emporter :\n- \nNom : \nHeure de retrait souhaitée : ",
+);

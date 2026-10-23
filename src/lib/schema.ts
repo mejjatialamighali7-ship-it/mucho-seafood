@@ -22,7 +22,7 @@ export function restaurantJsonLd() {
     logo: `${url}/images/logo-mucho.webp`,
     telephone: r.phone.value.e164,
     contactPoint: [
-      { "@type": "ContactPoint", telephone: r.phone.value.e164, contactType: "reservations" },
+      { "@type": "ContactPoint", telephone: r.phone.value.e164, contactType: "customer service" },
       { "@type": "ContactPoint", telephone: r.mobile.value.e164, contactType: "customer service" },
     ],
     servesCuisine: ["Poissons", "Fruits de mer", "Cuisine marocaine"],
@@ -67,9 +67,15 @@ export function menuJsonLd() {
         "@type": "MenuItem",
         name: d.name,
         ...(d.description ? { description: d.description } : {}),
-        ...(d.price?.verified
-          ? { offers: { "@type": "Offer", price: d.price.amount, priceCurrency: "MAD" } }
-          : {}),
+        ...(d.variants
+          ? {
+              offers: d.variants
+                .filter((v) => v.price.verified)
+                .map((v) => ({ "@type": "Offer", name: v.label, price: v.price.amount, priceCurrency: "MAD" })),
+            }
+          : d.price?.verified && !d.price.from
+            ? { offers: { "@type": "Offer", price: d.price.amount, priceCurrency: "MAD" } }
+            : {}),
       })),
     })),
   };
