@@ -35,7 +35,7 @@ export function MobileActionBar() {
   return (
     <nav
       aria-label="Actions rapides"
-      className={`fixed inset-x-3 bottom-3 z-40 rounded-full bg-abyss/95 text-ivory shadow-[0_12px_40px_rgba(11,22,49,0.35)] backdrop-blur transition-[transform,opacity] duration-500 md:hidden ${
+      className={`fixed bottom-3 left-3 right-[4.6rem] z-40 rounded-full bg-abyss/95 text-ivory shadow-[0_12px_40px_rgba(11,22,49,0.35)] backdrop-blur transition-[transform,opacity] duration-500 md:hidden ${
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-[140%] opacity-0"
       }`}
       style={{ marginBottom: "env(safe-area-inset-bottom)" }}

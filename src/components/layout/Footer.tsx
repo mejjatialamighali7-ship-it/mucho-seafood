@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { restaurant } from "@/config/restaurant";
-import { navLinks, telHref, fullAddress, deliveryUrl, directionsUrl, hoursLabel } from "@/lib/links";
+import { navLinks, telHref, mobileHref, fullAddress, deliveryUrl, directionsUrl, hoursLabel } from "@/lib/links";
 
 const socialLabels: Record<string, string> = {
   instagram: "Instagram",
@@ -52,6 +52,11 @@ export function Footer() {
                 <a href={telHref} className="link-underline hover:text-ivory">
                   {restaurant.phone.value.display}
                 </a>
+                <span className="text-ivory/50"> · </span>
+                <a href={mobileHref} className="link-underline hover:text-ivory">
+                  {restaurant.mobile.value.display}
+                </a>{" "}
+                <span className="text-ivory/50">(WhatsApp)</span>
               </p>
               <p>
                 <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className="link-underline inline-flex items-center gap-1 hover:text-ivory">

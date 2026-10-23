@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import { restaurant } from "@/config/restaurant";
 import { RevealObserver } from "@/components/ui/RevealObserver";
+import { WhatsAppBubble } from "@/components/layout/WhatsAppBubble";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -70,6 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Aller au contenu
         </a>
         {children}
+        <WhatsAppBubble />
         <RevealObserver />
       </body>
     </html>

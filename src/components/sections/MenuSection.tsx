@@ -8,6 +8,9 @@ import { MenuTabs } from "./MenuTabs";
 import { deliveryUrl } from "@/lib/links";
 import { restaurant } from "@/config/restaurant";
 
+/** Nombre de plats montrés par catégorie sur l'accueil ; la carte complète est sur /carte. */
+const PREVIEW = 6;
+
 export function MenuSection() {
   const anyPrice = publishedMenu.some((c) => c.dishes.some((d) => d.price?.verified));
 
@@ -23,7 +26,7 @@ export function MenuSection() {
                 Poissons, fruits de mer <em className="text-mucho">& cuisine marine.</em>
               </>
             }
-            intro="Fritures, grillades, paellas, tajines de la mer, coquillages et pâtes : une sélection de la carte, à parcourir par envie."
+            intro="Fritures, grillades, seafood boil, tajines de la mer, coquillages, pâtes et pizzas : un aperçu de la carte, à parcourir par envie."
           />
           <Reveal delay={200} className="flex flex-col gap-3 sm:flex-row">
             <Link href="/carte" className="btn btn-brand">
@@ -43,14 +46,22 @@ export function MenuSection() {
           <MenuTabs
             categories={publishedMenu}
             panels={publishedMenu.map((c) => (
-              <DishList key={c.id} dishes={c.dishes} />
+              <div key={c.id}>
+                <DishList dishes={c.dishes.slice(0, PREVIEW)} note={c.note} />
+                {c.dishes.length > PREVIEW ? (
+                  <Link href={`/carte#${c.id}`} className="link-underline mt-10 inline-flex items-center gap-2 text-sm font-medium text-mucho">
+                    Voir les {c.dishes.length} propositions « {c.title} »
+                    <ArrowRight size={14} aria-hidden="true" />
+                  </Link>
+                ) : null}
+              </div>
             ))}
           />
         </Reveal>
 
         <p className="mt-16 max-w-2xl border-t border-ink/10 pt-6 text-sm leading-relaxed text-muted">
           {anyPrice
-            ? "Prix en dirhams (MAD). "
+            ? "Prix en dirhams. Les prix non indiqués vous sont communiqués au restaurant et par téléphone. "
             : "Les prix vous sont communiqués au restaurant et par téléphone. "}
           La carte peut évoluer et certains plats peuvent ne pas être disponibles.
           {officialMenuUrl ? (

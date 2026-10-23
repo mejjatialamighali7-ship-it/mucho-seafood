@@ -33,7 +33,11 @@ ok((await fetch(BASE + "/page-inexistante")).status === 404, "Page inconnue → 
     const id = a.split("#")[1];
     ok(await page.$(`#${id}`), `Ancre ${a} présente`);
   }
-  ok(links.includes("tel:+212661146309"), "Lien téléphone cliquable");
+  ok(links.includes("tel:+212523800833"), "Lien téléphone (fixe) cliquable");
+  ok(links.includes("tel:+212661146309"), "Lien portable cliquable");
+  ok(links.some((h) => h.startsWith("https://wa.me/212661146309")), "Pastille WhatsApp");
+  ok(links.includes("https://www.instagram.com/muchoseafoodrestaurant/"), "Lien Instagram officiel");
+  ok(await page.$$eval("#carte [role=tab]", (t) => t.some((x) => x.textContent.includes("Pizzas"))), "Carte : catégorie Pizzas");
   ok(links.some((h) => h.startsWith("https://www.google.com/maps/dir/")), "Lien d'itinéraire");
   ok(links.some((h) => h.startsWith("https://glovoapp.com/")), "Lien de livraison Glovo");
   const ld = await page.$eval('script[type="application/ld+json"]', (s) => JSON.parse(s.textContent));
@@ -78,6 +82,7 @@ ok((await fetch(BASE + "/page-inexistante")).status === 404, "Page inconnue → 
   await page.click('form button[type="submit"]');
   const send = await page.waitForSelector('a[href^="sms:"], a[href^="https://wa.me/"]', { timeout: 3000 }).catch(() => null);
   const href = send ? await send.getAttribute("href") : "";
+  ok(href.startsWith("https://wa.me/212661146309"), "Réservation : envoi sur WhatsApp au bon numéro");
   ok(href && decodeURIComponent(href).includes("Test Mucho") && decodeURIComponent(href).includes("4"), "Réservation : message prérempli (SMS/WhatsApp)");
 
   ok(errors.length === 0, `Aucune erreur console${errors.length ? " — " + errors.join(" | ") : ""}`);

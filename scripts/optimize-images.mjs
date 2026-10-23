@@ -14,6 +14,17 @@ const jobs = [
   { name: "linguine-fruits-de-mer", width: 765 },
 ];
 
+// Photos Instagram du restaurant : captures d'écran recadrées
+// (sans la barre d'état du téléphone ni l'interface « Send message »).
+const instagram = [
+  { name: "ig-poisson-grille", region: { left: 0, top: 640, width: 1206, height: 1260 } },
+  { name: "ig-friture-assortiment", region: { left: 0, top: 190, width: 1206, height: 2136 } },
+  { name: "ig-palourdes", region: { left: 0, top: 190, width: 1206, height: 2136 } },
+  { name: "ig-linguine-fruits-de-mer", region: { left: 0, top: 190, width: 1206, height: 2136 } },
+  { name: "ig-poisson-puree-legumes", region: { left: 0, top: 640, width: 1206, height: 1236 } },
+  { name: "ig-friture-aneth", region: { left: 0, top: 190, width: 1206, height: 2136 } },
+];
+
 const details = [
   { from: "friture-mucho", out: "detail-crevettes", region: { left: 470, top: 360, width: 295, height: 340 } },
   { from: "salle-vue-mer", out: "detail-fauteuil", region: { left: 600, top: 380, width: 340, height: 300 } },
@@ -26,6 +37,14 @@ for (const job of jobs) {
     .resize({ width: job.width, withoutEnlargement: true })
     .webp({ quality: 80, effort: 6 })
     .toFile(`${OUT}/${job.name}.webp`);
+}
+
+for (const ig of instagram) {
+  await sharp(`${SRC}/${ig.name}.png`)
+    .extract(ig.region)
+    .resize({ width: 1000, withoutEnlargement: true })
+    .webp({ quality: 80, effort: 6 })
+    .toFile(`${OUT}/${ig.name}.webp`);
 }
 
 for (const d of details) {

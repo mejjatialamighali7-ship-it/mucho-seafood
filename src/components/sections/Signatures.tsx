@@ -73,7 +73,7 @@ export function Signatures() {
         ) : null}
 
         {others.length > 0 ? (
-          <ul className="mt-20 grid gap-px overflow-hidden border border-ivory/15 bg-ivory/15 sm:grid-cols-2 lg:mt-28 lg:grid-cols-3">
+          <ul className={`mt-20 grid gap-px overflow-hidden border border-ivory/15 bg-ivory/15 sm:grid-cols-2 lg:mt-28 ${others.length % 3 === 0 ? "lg:grid-cols-3" : ""}`}>
             {others.map((d, i) => (
               <Reveal
                 as="li"

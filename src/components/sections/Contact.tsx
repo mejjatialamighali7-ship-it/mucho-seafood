@@ -1,6 +1,6 @@
-import { ArrowUpRight, Navigation, Phone, Clock, MapPin, Bike } from "lucide-react";
+import { ArrowUpRight, Navigation, Phone, Clock, MapPin, Bike, MessageCircle } from "lucide-react";
 import { restaurant } from "@/config/restaurant";
-import { telHref, directionsUrl, deliveryUrl, fullAddress, hoursLabel } from "@/lib/links";
+import { telHref, mobileHref, directionsUrl, deliveryUrl, fullAddress, hoursLabel, whatsappHref } from "@/lib/links";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { MapEmbed } from "./MapEmbed";
@@ -46,6 +46,12 @@ export function Contact() {
                   <a href={telHref} className="link-underline mt-2 inline-block font-serif text-2xl text-abyss">
                     {restaurant.phone.value.display}
                   </a>
+                  <p className="mt-1 text-sm text-muted">
+                    Portable et WhatsApp :{" "}
+                    <a href={mobileHref} className="link-underline text-abyss">
+                      {restaurant.mobile.value.display}
+                    </a>
+                  </p>
                 </div>
               </div>
               <div className={row}>
@@ -73,6 +79,12 @@ export function Contact() {
                 <Phone size={16} aria-hidden="true" />
                 Appeler
               </a>
+              {whatsappHref("Bonjour Mucho, ") ? (
+                <a href={whatsappHref("Bonjour Mucho, ")!} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-dark">
+                  <MessageCircle size={16} aria-hidden="true" />
+                  WhatsApp
+                </a>
+              ) : null}
             </div>
 
             {deliveryUrl ? (

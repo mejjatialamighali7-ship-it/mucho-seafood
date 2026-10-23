@@ -36,7 +36,7 @@ export function MenuTabs({ categories, panels }: { categories: MenuCategory[]; p
           role="tablist"
           aria-label="Catégories de la carte"
           onKeyDown={onKeyDown}
-          className="no-scrollbar flex gap-1 overflow-x-auto px-5 sm:px-0"
+          className="no-scrollbar flex gap-1 overflow-x-auto px-5 sm:px-0 lg:flex-wrap"
         >
           {categories.map((c, i) => {
             const selected = i === active;

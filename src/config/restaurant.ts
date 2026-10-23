@@ -47,18 +47,26 @@ export const restaurant = {
    */
   mapsQuery: "Mucho Seafood, Route de Casablanca, El Jadida, Maroc",
 
+  /** Téléphone principal (fixe) — imprimé sur la carte officielle du restaurant. */
   phone: {
-    value: { display: "+212 661 146 309", e164: "+212661146309" },
-    verified: false,
-    source: "Brief propriétaire + Restaurant Guru",
+    value: { display: "05 23 80 08 33", e164: "+212523800833" },
+    verified: true,
+    source: "Carte imprimée du restaurant",
+  },
+
+  /** Portable — transmis par le propriétaire ; reçoit WhatsApp et SMS. */
+  mobile: {
+    value: { display: "06 61 14 63 09", e164: "+212661146309" },
+    verified: true,
+    source: "Propriétaire",
   },
 
   /**
-   * Numéro WhatsApp — configuré séparément du téléphone, volontairement vide.
-   * Renseignez-le uniquement après avoir vérifié qu'il reçoit bien WhatsApp
-   * (format international sans espaces ni « + », ex. "212661146309").
+   * Numéro WhatsApp (format international sans espaces ni « + »).
+   * Confirmé par le propriétaire le 23/10/2026. Active la pastille flottante
+   * et l'envoi des demandes de réservation sur WhatsApp. Mettre null pour désactiver.
    */
-  whatsapp: null as string | null,
+  whatsapp: "212661146309" as string | null,
 
   email: null as string | null,
 
@@ -84,9 +92,10 @@ export const restaurant = {
   },
 
   /** Réseaux sociaux officiels — ajoutez uniquement des comptes vérifiés. */
+  /** Réseaux sociaux officiels — ceux-ci figurent sur la carte imprimée du restaurant. */
   social: {
-    instagram: null as string | null,
-    facebook: null as string | null,
+    instagram: "https://www.instagram.com/muchoseafoodrestaurant/" as string | null,
+    facebook: "https://www.facebook.com/mucho" as string | null,
     tiktok: null as string | null,
   },
 

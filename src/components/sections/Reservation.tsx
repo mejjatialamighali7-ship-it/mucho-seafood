@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Phone } from "lucide-react";
 import { restaurant } from "@/config/restaurant";
-import { telHref, hoursLabel } from "@/lib/links";
+import { telHref, mobileHref, hoursLabel } from "@/lib/links";
 import { Reveal } from "@/components/ui/Reveal";
 import { ReservationForm } from "./ReservationForm";
 
@@ -40,6 +40,12 @@ export function Reservation() {
                 <Phone size={20} strokeWidth={1.5} aria-hidden="true" />
                 {restaurant.phone.value.display}
               </a>
+              <p className="mt-2 text-sm text-ivory/70">
+                Portable et WhatsApp :{" "}
+                <a href={mobileHref} className="link-underline text-ivory">
+                  {restaurant.mobile.value.display}
+                </a>
+              </p>
             </div>
             <div>
               <p className="text-[0.7rem] tracking-[0.2em] text-ivory/60 uppercase">Horaires</p>

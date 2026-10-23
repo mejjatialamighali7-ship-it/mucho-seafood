@@ -21,6 +21,10 @@ export function restaurantJsonLd() {
     image: [`${url}/og-image.jpg`, `${url}/images/salle-vue-mer.webp`],
     logo: `${url}/images/logo-mucho.webp`,
     telephone: r.phone.value.e164,
+    contactPoint: [
+      { "@type": "ContactPoint", telephone: r.phone.value.e164, contactType: "reservations" },
+      { "@type": "ContactPoint", telephone: r.mobile.value.e164, contactType: "customer service" },
+    ],
     servesCuisine: ["Poissons", "Fruits de mer", "Cuisine marocaine"],
     address: {
       "@type": "PostalAddress",

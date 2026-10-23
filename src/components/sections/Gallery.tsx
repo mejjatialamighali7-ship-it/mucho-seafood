@@ -18,7 +18,7 @@ const slots = [
 ];
 
 const sizesFor = (i: number) =>
-  i === 0 || i === 5 ? "(min-width: 1024px) 60vw, 100vw" : "(min-width: 1024px) 30vw, 50vw";
+  i === 0 || i === 5 ? "(min-width: 1024px) 60vw, 100vw" : "(min-width: 1024px) 33vw, 50vw";
 
 export function Gallery() {
   const [index, setIndex] = useState<number | null>(null);
@@ -69,7 +69,7 @@ export function Gallery() {
               Une table <em className="text-mucho">face à l&apos;océan.</em>
             </>
           }
-          intro="La salle, la lumière de la côte et quelques assiettes, photographiées au restaurant."
+          intro="La salle, la lumière de la côte et les assiettes de la maison, photographiées au restaurant."
         />
 
         <ul className="mt-14 grid grid-cols-2 gap-3 sm:gap-4 lg:mt-20 lg:grid-cols-12 lg:grid-rows-[34rem_15rem_15rem]">
@@ -79,7 +79,7 @@ export function Gallery() {
               variant="image"
               key={g.src}
               delay={(i % 3) * 120}
-              className={`relative overflow-hidden ${slots[i] ?? "aspect-[4/3] lg:col-span-4 lg:row-auto lg:aspect-[4/3]"}`}
+              className={`relative overflow-hidden ${slots[i] ?? "aspect-[4/5] lg:col-span-4 lg:row-auto lg:aspect-[4/5]"}`}
             >
               <button
                 type="button"

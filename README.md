@@ -60,10 +60,10 @@ Dans `src/data/menu.ts`, chaque plat ressemble à ceci :
 
 - **Ajouter un plat** : copiez une ligne dans la bonne catégorie et changez `id` (unique) et `name`.
 - **Retirer un plat** : supprimez la ligne, ou ajoutez `available: false` pour le masquer temporairement.
-- **Afficher un prix** : remplacez `glovo(145)` par `{ amount: 145, verified: true }`. Un prix n'apparaît **que** si `verified: true`.
-  Les montants actuels viennent de la boutique Glovo (relevé du 23/10/2026) : ce sont des prix de livraison, qui peuvent différer des prix en salle.
+- **Afficher un prix** : écrivez `price: dh(145)`. Les prix `dh(…)` viennent de la carte imprimée et s'affichent. Les prix `glovo(…)` (relevés sur Glovo, prix de livraison) ne s'affichent **jamais** : remplacez-les par `dh(…)` une fois le prix en salle confirmé.
+- **Intertitres** : `group: "Jus frais"` range un plat sous un intertitre dans sa catégorie ; `note` sur une catégorie affiche une mention (ex. « selon arrivage »).
 - **Plat signature** : `signature: true` le place dans la section « Plats signatures ». Le premier plat signature qui a une photo est mis en scène en grand.
-- **Plats masqués** : « Poulpe pil-pil » et « Tajine de poisson » apparaissent dans un annuaire mais pas sur la carte Glovo. Ils portent `confirmed: false` et restent masqués : passez `confirmed: true` s'ils sont bien à la carte.
+- **Plat masqué** : « Tajine de poisson » n'apparaît que dans un annuaire ; il porte `confirmed: false`. Supprimez cette mention s'il est bien à la carte.
 - **Carte officielle** (PDF, lien) : renseignez `officialMenuUrl` en bas du fichier ; un lien apparaît alors sous la carte.
 
 ## 3. Remplacer ou ajouter des photos
@@ -76,7 +76,7 @@ Les photos sources sont dans `assets-src/` (fichiers d'origine fournis par le re
 4. Pour la galerie, ajoutez une entrée dans `src/data/gallery.ts` (chemin, texte alternatif, légende, dimensions).
 5. Pour illustrer un plat, ajoutez `image` et `imageAlt` au plat dans `src/data/menu.ts`.
 
-Photos actuellement utilisées : logo officiel, salle avec vue sur l'océan, Friture Mucho, pâtes aux fruits de mer, plateau de fruits de mer et riz, plus deux recadrages « détail » (crevettes, tissu des fauteuils). Les photos actuelles font 765 à 1360 px de large : des photos en plus haute définition rendront l'accueil encore plus net sur grand écran.
+Photos actuellement utilisées : logo officiel, salle avec vue sur l'océan, Friture Mucho, pâtes aux fruits de mer vue plage, plateau de fruits de mer et riz, six photos Instagram du restaurant (captures recadrées, préfixe `ig-` : linguine, palourdes, poisson grillé, poisson-purée-légumes, deux fritures), plus deux recadrages « détail » (crevettes, tissu des fauteuils). Les photos de la carte imprimée sont gardées dans `assets-src/` pour référence. Les photos actuelles font 765 à 1360 px de large : des photos en plus haute définition rendront l'accueil encore plus net sur grand écran.
 
 ## 4. Réservation et WhatsApp
 
@@ -85,8 +85,8 @@ Le site ne simule aucune disponibilité. Le formulaire (nom, téléphone, date, 
 Trois modes, choisis automatiquement :
 
 1. **Webhook (recommandé une fois en ligne)** : définissez `RESERVATION_WEBHOOK_URL` dans les variables d'environnement de l'hébergeur. Le serveur (`src/app/api/reservation/route.ts`) valide et transmet la demande en JSON à cette adresse. Exemples : un scénario Make ou Zapier qui envoie un e-mail, un WhatsApp Business ou une ligne dans Google Sheets ; un Google Apps Script ; un webhook Slack. Le webhook reste côté serveur : il n'est jamais exposé au navigateur. Redéployez après l'avoir ajouté.
-2. **WhatsApp** : renseignez `whatsapp` dans `src/config/restaurant.ts` (format `212661146309`, sans `+` ni espaces), **après avoir vérifié** que ce numéro reçoit bien WhatsApp. Le bouton « Envoyer sur WhatsApp » ouvre la conversation avec le message prérempli.
-3. **SMS (mode actuel)** : sans webhook ni WhatsApp, le bouton « Envoyer par SMS » ouvre l'application SMS du téléphone avec le message prérempli vers le numéro du restaurant. Les boutons « Appeler » et « Copier le message » restent proposés (utile sur ordinateur).
+2. **WhatsApp (mode actuel)** : `whatsapp: "212661146309"` dans `src/config/restaurant.ts` (format international sans `+` ni espaces). Le bouton « Envoyer sur WhatsApp » ouvre la conversation avec le message prérempli. Ce numéro alimente aussi la **pastille WhatsApp flottante** visible sur toutes les pages (`src/components/layout/WhatsAppBubble.tsx`). Mettre `null` désactive les deux.
+3. **SMS** : sans webhook ni WhatsApp, le bouton « Envoyer par SMS » ouvre l'application SMS avec le message prérempli vers le portable du restaurant. Les boutons « Appeler » et « Copier le message » restent proposés (utile sur ordinateur).
 
 ## 5. Déployer
 
@@ -108,30 +108,29 @@ Après la mise en ligne : déclarez `https://votre-domaine/sitemap.xml` dans Goo
 
 **Confirmé**
 
-- Logo officiel et photos (fournis par le restaurant).
-- Vue sur l'océan : visible sur les photos officielles de la salle et des tables.
-- Existence d'une boutique Mucho El Jadida sur Glovo, avec la carte et les prix listés dans `menu.ts`.
+- Logo officiel et photos (fournis par le restaurant, dont six publications Instagram).
+- Vue sur l'océan : visible sur les photos officielles.
+- Carte imprimée (page Pizza / Desserts / Boissons) : plats et prix affichés.
+- Téléphone fixe 05 23 80 08 33, Instagram @muchoseafoodrestaurant, Facebook /mucho : imprimés sur la carte.
+- Portable et WhatsApp 06 61 14 63 09 : confirmé par le propriétaire.
+- Boutique Mucho El Jadida sur Glovo.
 
-**À confirmer (affiché avec précaution)**
+**À confirmer**
 
 - Adresse : 1er étage, villa 1, route de Casablanca, El Jadida 24000.
-- Téléphone : +212 661 146 309.
 - Horaires : tous les jours, 12 h 30 – 23 h (affichés « à confirmer », non transmis à Google).
-- Livraison Glovo : la boutique indiquait « fermée actuellement » lors du relevé du 23/10/2026 (en pleine journée).
-- Prix : relevés sur Glovo, masqués tant qu'ils ne sont pas validés.
-- Poulpe pil-pil et tajine de poisson : présents dans un annuaire, masqués.
-- Identification des plats en photo : « Friture Mucho » (le contenu de l'assiette correspond à la description Glovo) et « Linguine aux fruits de mer ».
+- Prix des entrées, poissons, fruits de mer, seafood boil, tajines, pâtes et viandes : ces pages de la carte n'étaient lisibles que de biais sur la photo. Les plats sont repris, les prix restent masqués. Une photo bien à plat de chaque page suffit pour les ajouter.
+- Deux versions de la page desserts/boissons ont été fournies (l'une avec mousse et crème caramel à 40 Dh, tarte aux pommes ; l'autre à 35 Dh, cheesecakes, pizza vegan). Le site suit la version la plus nette ; à vérifier qu'il s'agit bien de la carte actuelle.
+- Le compte Facebook est indiqué « /mucho » sur la carte : vérifier que facebook.com/mucho est bien la page du restaurant.
+- Identification des plats en photo : Friture Mucho, Linguine aux fruits de mer, Palourdes marinières.
 - Emplacement exact sur Google Maps : à remplacer par les coordonnées GPS dans `mapsQuery`.
 
 **À obtenir**
 
-- Numéro WhatsApp vérifié.
-- Comptes Instagram, Facebook, TikTok officiels (aucun n'a pu être vérifié ; rien n'est affiché).
 - Adresse du site (nom de domaine) et hébergeur.
 - Informations légales : raison sociale, forme juridique, RC, ICE, IF, responsable de publication, e-mail de contact.
-- Photos supplémentaires en haute définition, notamment Grillade Mucho, Paella et Marmite de fruits de mer (elles s'affichent pour l'instant en version typographique).
+- Photos en haute définition, notamment du Seafood Boil, de la Grillade Mucho et de la Marmite (présentées pour l'instant en version typographique).
 - Avis clients authentiques à citer, avec leur source et leur date (la section est masquée tant qu'il n'y en a pas).
-- Carte officielle (PDF ou lien), si elle existe.
 
 ## 7. Structure
 

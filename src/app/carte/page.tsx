@@ -11,7 +11,7 @@ import { restaurant } from "@/config/restaurant";
 export const metadata: Metadata = {
   title: "La carte — poissons, fruits de mer, paellas et tajines",
   description:
-    "La carte de Mucho Seafood à El Jadida : Friture Mucho, Grillade Mucho, paella et marmite de fruits de mer, crevettes pil-pil, tajines de la mer, pâtes et desserts.",
+    "La carte de Mucho Seafood à El Jadida : Friture Mucho, Seafood Boil, marmite de fruits de mer, poissons grillés, crevettes pil-pil, tajines de la mer, pâtes, pizzas, desserts et jus frais.",
   alternates: { canonical: "/carte" },
   openGraph: { url: "/carte" },
 };
@@ -53,7 +53,7 @@ export default function CartePage() {
                 </h2>
               </div>
               <div className="lg:col-span-9">
-                <DishList dishes={c.dishes} />
+                <DishList dishes={c.dishes} note={c.note} />
               </div>
             </div>
           </section>
@@ -61,7 +61,9 @@ export default function CartePage() {
 
         <div className="mt-16 flex flex-col gap-8 border-t border-ink/10 pt-10 lg:flex-row lg:items-center lg:justify-between">
           <p className="max-w-xl text-sm leading-relaxed text-muted">
-            {anyPrice ? "Prix en dirhams (MAD). " : "Les prix vous sont communiqués au restaurant et par téléphone. "}
+            {anyPrice
+              ? "Prix en dirhams. Les prix non indiqués vous sont communiqués au restaurant et par téléphone. "
+              : "Les prix vous sont communiqués au restaurant et par téléphone. "}
             La carte peut évoluer et certains plats peuvent ne pas être disponibles. Allergies ou régime particulier :
             parlez-en à l&apos;équipe.
             {officialMenuUrl ? (
