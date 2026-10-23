@@ -27,7 +27,7 @@ npm run build && npm start   # puis, dans un autre terminal :
 BASE_URL=http://localhost:3000 npm run test:e2e   # tests fonctionnels (Playwright)
 ```
 
-Les tests fonctionnels vérifient : pages et codes HTTP, liens et ancres, téléphone, itinéraire, Glovo, chargement des images, onglets de la carte au clavier, visionneuse photo, boutons WhatsApp et « à emporter », absence de formulaire de réservation, menu mobile, absence de débordement horizontal de 360 à 1440 px, données structurées sans note ni avis inventés. Si Playwright n'a pas de navigateur : `npx playwright install chromium`.
+Les tests fonctionnels vérifient : pages et codes HTTP (dont CGU, confidentialité, favicon, manifeste), redirection /rgpd, sitemap, en-têtes de sécurité (HSTS, CSP, anti-iframe), titre, description et image de partage de chaque page, liens et ancres, numéro unique, absence du mot « livraison », un seul bloc d'action (Itinéraire, WhatsApp, Appeler), chargement des images et photo allégée sur téléphone, onglets de la carte au clavier, visionneuse photo, bandeau cookies (si Google Analytics est configuré), plan Google Maps autorisé, menu mobile, absence de débordement horizontal de 320 à 1920 px, données structurées sans note ni avis inventés. Si Playwright n'a pas de navigateur : `npx playwright install chromium`.
 
 ## 2. Où modifier quoi
 
@@ -38,6 +38,10 @@ Les tests fonctionnels vérifient : pages et codes HTTP, liens et ancres, télé
 | Photos de la galerie | `src/data/gallery.ts` |
 | Avis clients (vide par défaut) | `src/data/reviews.ts` |
 | Mentions légales (raison sociale, RC, ICE, hébergeur) | `src/config/legal.ts` |
+| Pages légales | `src/app/mentions-legales`, `src/app/cgu`, `src/app/confidentialite` (RGPD et cookies) |
+| Google Analytics (identifiant) | variable `NEXT_PUBLIC_GA_ID`, voir § 5 |
+| Le bloc d'action unique (Itinéraire, WhatsApp, Appeler) | `src/components/ui/ActionButtons.tsx` |
+| En-têtes de sécurité, cache, redirections | `next.config.ts` |
 | Couleurs, typographies, animations | `src/app/globals.css` |
 | Titre et description Google, partage social | `src/app/layout.tsx`, `src/app/carte/page.tsx` |
 
@@ -68,7 +72,7 @@ Toute la carte vient de la **carte officielle** transmise par le restaurant (PDF
 
 ## 3. Remplacer ou ajouter des photos
 
-Les photos sources sont dans `assets-src/` (fichiers d'origine fournis par le restaurant). Le script `npm run images` les convertit en WebP optimisés dans `public/images/`, recrée le favicon (`src/app/icon.png`) et l'image de partage (`public/og-image.jpg`).
+Les photos sources sont dans `assets-src/` (fichiers d'origine fournis par le restaurant). Le script `npm run images` les convertit en WebP optimisés dans `public/images/`, en trois largeurs (`photo.webp`, `photo-828.webp`, `photo-480.webp`) : le téléphone télécharge automatiquement la plus légère qui suffit (chargeur `src/lib/image-loader.ts`, aucun calcul côté serveur). Il recrée aussi les icônes (`src/app/icon.png`, `apple-icon.png`, `favicon.ico`) et l'image de partage (`public/og-image.jpg`).
 
 1. Déposez la nouvelle photo dans `assets-src/` (PNG ou JPG, le plus grand format possible : 2000 px de large ou plus est idéal).
 2. Pour remplacer une photo existante, gardez le même nom de fichier. Pour en ajouter une, ajoutez-la dans la liste `jobs` de `scripts/optimize-images.mjs`.
@@ -82,11 +86,21 @@ Photos actuellement utilisées : logo officiel, salle avec vue sur l'océan, Fri
 
 Le restaurant ne prend **pas de réservation** : le site n'a aucun formulaire et invite à venir directement (section « Venir chez Mucho »).
 
-- **À emporter** : le bloc « À emporter » (ancre `/#emporter`, bouton « Commander à emporter » de la carte, page `/carte`, menu mobile) propose deux boutons : **Commander sur WhatsApp** (message prérempli : commande, nom, heure de retrait) et **Commander par téléphone** (fixe). Composant : `src/components/ui/TakeawayButtons.tsx` ; texte du message : `takeawayWhatsappHref` dans `src/lib/links.ts`.
+- **Un seul bloc d'action** : partout sur le site (accueil, en-tête, menu mobile, « Venir chez Mucho », contact, page carte), les mêmes trois boutons **Itinéraire · WhatsApp · Appeler** (`src/components/ui/ActionButtons.tsx`). Tout le reste (carte, Glovo) est en simple lien texte. Sur téléphone, la barre en bas d'écran propose Itinéraire et Appeler, à côté de la pastille WhatsApp.
+- **À emporter** : le bloc « À emporter » (ancre `/#emporter`) explique la commande par téléphone ou WhatsApp, avec un lien WhatsApp prérempli (commande, nom, heure de retrait : `takeawayWhatsappHref` dans `src/lib/links.ts`).
+- **Téléphone** : un seul numéro, le 06 61 14 63 09 (appel et WhatsApp). Le fixe 05 23 80 08 33 imprimé sur l'ancienne carte n'est pas le bon : il a aussi été remplacé dans le PDF téléchargeable `public/carte-mucho.pdf` (l'original reste dans `assets-src/`).
 - **WhatsApp** : `whatsapp: "212661146309"` dans `src/config/restaurant.ts` (format international sans `+` ni espaces). Il alimente la pastille flottante visible sur toutes les pages (`src/components/layout/WhatsAppBubble.tsx`) et tous les boutons WhatsApp. Mettre `null` les masque.
 - **Glovo** : lien vers la boutique Glovo (`delivery` dans la configuration). Le restaurant ne livre pas lui-même : le mot « livraison » n'apparaît pas sur le site.
 
-## 5. Déployer
+## 5. Sécurité, RGPD, cookies et statistiques
+
+- **HTTPS** : Render redirige automatiquement http vers https ; le site ajoute l'en-tête HSTS (2 ans) et `upgrade-insecure-requests`.
+- **En-têtes de sécurité** (`next.config.ts`) : politique de sécurité du contenu (CSP), anti-iframe (`frame-ancestors 'none'`, `X-Frame-Options`), `nosniff`, `Referrer-Policy`, `Permissions-Policy` (caméra, micro, localisation désactivés), technologie du serveur masquée.
+- **Aucune API ni clé secrète** : le site est entièrement statique, sans base de données ni formulaire. Il n'y a donc rien à pirater côté serveur, ni formulaire à valider ou à protéger du spam. Les seules données reçues arrivent par WhatsApp ou téléphone.
+- **Pages légales** : Mentions légales, CGU (`/cgu`), Confidentialité & RGPD (`/confidentialite`, aussi accessible par `/rgpd`), avec le détail des cookies (`/confidentialite#cookies`).
+- **Google Analytics + bandeau cookies** : créez une propriété GA4 sur analytics.google.com (Admin > Créer > Propriété, puis Flux de données > Web), copiez l'**ID de mesure** (`G-XXXXXXXXXX`), ajoutez-le dans Render > Environment sous le nom `NEXT_PUBLIC_GA_ID`, puis redéployez. Le bandeau apparaît alors : rien n'est chargé avant « Accepter », « Refuser » est aussi simple, le choix est redemandé après 6 mois, les cookies GA durent 13 mois au plus, et le lien « Gérer les cookies » du pied de page permet de changer d'avis. Sans identifiant : aucun outil de mesure, aucun cookie, pas de bandeau.
+
+## 6. Déployer
 
 ### Sur Render (hébergement choisi)
 
@@ -97,7 +111,7 @@ Le fichier `render.yaml` décrit déjà le service.
 3. Il demande `NEXT_PUBLIC_SITE_URL` : mettez l'adresse définitive du site (ou l'adresse `https://mucho-seafood.onrender.com` en attendant le domaine).
 4. « Apply ». Chaque envoi sur la branche `main` redéploie le site automatiquement.
 5. Nom de domaine : dans le service, « Settings » puis « Custom Domains », ajoutez le domaine et recopiez les enregistrements DNS indiqués chez votre registraire. Mettez ensuite `NEXT_PUBLIC_SITE_URL` à jour et redéployez.
-6. Mettez à jour l'hébergeur dans `src/config/legal.ts` (raison sociale et adresse de Render : voir render.com/terms).
+6. L'hébergeur (Render Services, Inc., serveurs à Francfort) est déjà indiqué dans `src/config/legal.ts`.
 
 Si vous créez le service à la main (« New » puis « Web Service ») : Runtime Node, Build Command `npm ci && npm run build`, Start Command `npm start`, variable `NODE_VERSION` = `22`.
 
@@ -116,7 +130,7 @@ Autres hébergeurs compatibles Next.js : Netlify, Cloudflare, ou tout serveur No
 
 Après la mise en ligne : déclarez `https://votre-domaine/sitemap.xml` dans Google Search Console et ajoutez l'adresse du site à la fiche Google Business Profile.
 
-## 6. Ce que le propriétaire doit encore valider
+## 7. Ce que le propriétaire doit encore valider
 
 **Confirmé**
 
@@ -138,11 +152,13 @@ Après la mise en ligne : déclarez `https://votre-domaine/sitemap.xml` dans Goo
 **À obtenir**
 
 - Adresse du site (nom de domaine) et hébergeur.
-- Informations légales : raison sociale, forme juridique, RC, ICE, IF, responsable de publication, e-mail de contact.
+- Informations légales : raison sociale, forme juridique, RC, ICE, IF, responsable de publication, e-mail de contact (affichés « À compléter » dans les mentions légales tant qu'ils manquent).
+- Identifiant Google Analytics (`G-…`) si vous voulez les statistiques de visite.
+- Relecture des CGU et de la page Confidentialité & RGPD (modèles prudents, à faire valider si besoin par votre conseil).
 - Photos en haute définition, notamment du Seafood Boil, de la Grillade mixte et de la Marmite (présentées pour l'instant en version typographique).
 - Avis clients authentiques à citer, avec leur source et leur date (la section est masquée tant qu'il n'y en a pas).
 
-## 7. Structure
+## 8. Structure
 
 ```
 assets-src/             photos d'origine (non publiées telles quelles)
@@ -157,7 +173,7 @@ src/data/               carte, galerie, avis
 src/lib/                liens (téléphone, itinéraire, SMS, WhatsApp), données structurées
 ```
 
-## 8. Choix de conception
+## 9. Choix de conception
 
 - **Couleurs** : le bleu officiel du logo (`#293D84`) est la couleur de marque. Le bleu « abysse » proposé (`#092B35`, tirant sur le vert) a été décalé vers un bleu nuit (`#0B1631`) dérivé du logo, pour que logo et fonds parlent la même langue. Ivoire, sable et cuivre sont conservés ; le cuivre reste réservé aux filets, numéros et détails.
 - **Motif** : un damier de cubes en perspective, repris du tissu des fauteuils de la salle, très discret sur les fonds sombres. C'est un code propre à Mucho, réutilisable sur les menus et Instagram.

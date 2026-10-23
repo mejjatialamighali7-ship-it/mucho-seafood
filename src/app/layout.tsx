@@ -3,6 +3,7 @@ import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import { restaurant } from "@/config/restaurant";
 import { RevealObserver } from "@/components/ui/RevealObserver";
 import { WhatsAppBubble } from "@/components/layout/WhatsAppBubble";
+import { CookieConsent } from "@/components/layout/CookieConsent";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -73,6 +74,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <WhatsAppBubble />
         <RevealObserver />
+        <CookieConsent />
       </body>
     </html>
   );

@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
+import { ManageCookiesButton } from "@/components/layout/CookieConsent";
+import { gaId } from "@/config/analytics";
 import { restaurant } from "@/config/restaurant";
 import { navLinks, telHref, fullAddress, deliveryUrl, directionsUrl, hoursLabel } from "@/lib/links";
 
@@ -80,11 +82,11 @@ export function Footer() {
                 href={deliveryUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-ghost-light mt-8"
+                className="link-underline mt-8 inline-flex items-center gap-1 text-[0.95rem] text-ivory/80 hover:text-ivory"
               >
-                {restaurant.delivery.provider}
-                <ArrowUpRight size={16} aria-hidden="true" />
-                <span className="sr-only">(commander, nouvel onglet)</span>
+                Aussi sur {restaurant.delivery.provider}
+                <ArrowUpRight size={14} aria-hidden="true" />
+                <span className="sr-only">(nouvel onglet)</span>
               </a>
             ) : null}
             {socials.length > 0 ? (
@@ -105,17 +107,27 @@ export function Footer() {
           <p>
             © {year} {restaurant.brandName} — El Jadida, Maroc
           </p>
-          <ul className="flex gap-6">
+          <ul className="flex flex-wrap gap-x-6 gap-y-3">
             <li>
               <Link href="/mentions-legales" className="link-underline hover:text-ivory">
                 Mentions légales
               </Link>
             </li>
             <li>
-              <Link href="/confidentialite" className="link-underline hover:text-ivory">
-                Confidentialité
+              <Link href="/cgu" className="link-underline hover:text-ivory">
+                CGU
               </Link>
             </li>
+            <li>
+              <Link href="/confidentialite" className="link-underline hover:text-ivory">
+                Confidentialité &amp; RGPD
+              </Link>
+            </li>
+            {gaId ? (
+              <li>
+                <ManageCookiesButton className="link-underline cursor-pointer tracking-wide hover:text-ivory" />
+              </li>
+            ) : null}
           </ul>
         </div>
       </div>

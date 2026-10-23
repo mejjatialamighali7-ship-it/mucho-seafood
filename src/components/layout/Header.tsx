@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { Menu, X, Phone, ArrowUpRight } from "lucide-react";
+import { Menu, X, Navigation } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
-import { navLinks, telHref, deliveryUrl, fullAddress, takeawayWhatsappHref } from "@/lib/links";
+import { navLinks, directionsUrl, fullAddress } from "@/lib/links";
+import { ActionButtons } from "@/components/ui/ActionButtons";
 import { restaurant } from "@/config/restaurant";
 
 /**
@@ -89,21 +90,16 @@ export function Header({ variant = "overlay" }: { variant?: "overlay" | "solid" 
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          {deliveryUrl ? (
-            <a
-              href={deliveryUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`hidden items-center gap-1.5 px-3 text-[0.75rem] font-medium tracking-[0.14em] uppercase md:inline-flex ${textTone} link-underline`}
-            >
-              {restaurant.delivery.provider}
-              <ArrowUpRight size={14} aria-hidden="true" />
-              <span className="sr-only">(nouvel onglet)</span>
-            </a>
-          ) : null}
-          <Link href="/#contact" className={`btn hidden sm:inline-flex ${solid ? "btn-brand" : "btn-light"}`}>
-            Nous trouver
-          </Link>
+          <a
+            href={directionsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`btn hidden sm:inline-flex ${solid ? "btn-brand" : "btn-light"}`}
+          >
+            <Navigation size={16} aria-hidden="true" />
+            Itinéraire
+            <span className="sr-only">(Google Maps, nouvel onglet)</span>
+          </a>
           <button
             ref={toggleRef}
             type="button"
@@ -147,25 +143,10 @@ export function Header({ variant = "overlay" }: { variant?: "overlay" | "solid" 
             </ul>
           </nav>
           <div className="mt-auto space-y-3 pt-10">
-            <Link href="/#contact" onClick={() => setOpen(false)} className="btn btn-light w-full">
-              Nous trouver
-            </Link>
-            {takeawayWhatsappHref ? (
-              <a href={takeawayWhatsappHref} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-light w-full">
-                À emporter sur WhatsApp
-              </a>
-            ) : null}
-            {deliveryUrl ? (
-              <a href={deliveryUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-light w-full">
-                Commander sur {restaurant.delivery.provider}
-                <ArrowUpRight size={16} aria-hidden="true" />
-              </a>
-            ) : null}
-            <a href={telHref} className="btn btn-ghost-light w-full">
-              <Phone size={16} aria-hidden="true" />
-              {restaurant.phone.value.display}
-            </a>
-            <p className="pt-4 text-center text-sm text-ivory/60">{fullAddress}</p>
+            <ActionButtons tone="light" stacked />
+            <p className="pt-4 text-center text-sm text-ivory/60">
+              {restaurant.phone.value.display} · {fullAddress}
+            </p>
           </div>
         </div>
       </div>

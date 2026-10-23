@@ -1,12 +1,10 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { publishedMenu, officialMenuUrl } from "@/data/menu";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { DishList } from "@/components/ui/DishList";
 import { Reveal } from "@/components/ui/Reveal";
 import { MenuTabs } from "./MenuTabs";
-import { deliveryUrl } from "@/lib/links";
-import { restaurant } from "@/config/restaurant";
 
 /** Nombre de plats montrés par catégorie sur l'accueil ; la carte complète est sur /carte. */
 const PREVIEW = 6;
@@ -28,20 +26,15 @@ export function MenuSection() {
             }
             intro="Fritures, grillades, seafood boil, tajines de la mer, coquillages, pâtes et pizzas : un aperçu de la carte, à parcourir par envie."
           />
-          <Reveal delay={200} className="flex shrink-0 flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link href="/#emporter" className="btn btn-brand">
-              Commander à emporter
-            </Link>
-            <Link href="/carte" className="btn btn-ghost-dark">
+          <Reveal delay={200} className="flex shrink-0 flex-wrap gap-x-8 gap-y-3 text-sm font-medium text-mucho">
+            <Link href="/carte" className="link-underline inline-flex items-center gap-2">
               Carte complète
-              <ArrowRight size={16} aria-hidden="true" />
+              <ArrowRight size={14} aria-hidden="true" />
             </Link>
-            {deliveryUrl ? (
-              <a href={deliveryUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-dark">
-                Commander sur {restaurant.delivery.provider}
-                <ArrowUpRight size={16} aria-hidden="true" />
-              </a>
-            ) : null}
+            <Link href="/#emporter" className="link-underline inline-flex items-center gap-2">
+              À emporter
+              <ArrowRight size={14} aria-hidden="true" />
+            </Link>
           </Reveal>
         </div>
 

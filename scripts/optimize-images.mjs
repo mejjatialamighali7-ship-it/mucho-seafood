@@ -82,3 +82,46 @@ await sharp(`${SRC}/fruits-de-mer-riz-vue-mer.png`)
   .toFile("public/og-image.jpg");
 
 console.log("Images optimisées dans", OUT);
+
+// Variantes plus légères pour les téléphones et tablettes : name-480.webp, name-828.webp.
+// Le chargeur src/lib/image-loader.ts choisit la plus petite qui suffit à l'écran.
+// Gardez cette liste identique à VARIANTS dans src/lib/image-loader.ts.
+const VARIANTS = [480, 828];
+const { readdir } = await import("node:fs/promises");
+const variantName = /-\d+\.webp$/;
+for (const file of await readdir(OUT)) {
+  if (!file.endsWith(".webp") || variantName.test(file)) continue;
+  for (const w of VARIANTS) {
+    await sharp(`${OUT}/${file}`)
+      .resize({ width: w, withoutEnlargement: true })
+      .webp({ quality: 78, effort: 6 })
+      .toFile(`${OUT}/${file.replace(/\.webp$/, `-${w}.webp`)}`);
+  }
+}
+
+// Icônes : écran d'accueil iPhone (fond plein, iOS n'accepte pas la transparence)
+// et favicon.ico classique (16 et 32 px) pour les anciens navigateurs et Google.
+const logoPng = await sharp(`${SRC}/logo-mucho.png`).ensureAlpha().composite([{ input: mask, blend: "dest-in" }]).png().toBuffer();
+await sharp({ create: { width: 180, height: 180, channels: 4, background: "#f7f3ea" } })
+  .composite([{ input: await sharp(logoPng).resize(150, 150).toBuffer(), gravity: "centre" }])
+  .png({ compressionLevel: 9 })
+  .toFile("src/app/apple-icon.png");
+const icoSizes = [16, 32];
+const pngs = await Promise.all(icoSizes.map((s) => sharp(logoPng).resize(s, s).png().toBuffer()));
+const header = Buffer.alloc(6 + 16 * pngs.length);
+header.writeUInt16LE(0, 0);
+header.writeUInt16LE(1, 2);
+header.writeUInt16LE(pngs.length, 4);
+let offset = header.length;
+pngs.forEach((png, i) => {
+  const e = 6 + 16 * i;
+  header.writeUInt8(icoSizes[i], e);
+  header.writeUInt8(icoSizes[i], e + 1);
+  header.writeUInt16LE(1, e + 4);
+  header.writeUInt16LE(32, e + 6);
+  header.writeUInt32LE(png.length, e + 8);
+  header.writeUInt32LE(offset, e + 12);
+  offset += png.length;
+});
+const { writeFile } = await import("node:fs/promises");
+await writeFile("src/app/favicon.ico", Buffer.concat([header, ...pngs]));

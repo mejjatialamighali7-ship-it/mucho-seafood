@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Phone, Navigation, BookOpen } from "lucide-react";
+import { Phone, Navigation } from "lucide-react";
 import { telHref, directionsUrl } from "@/lib/links";
 
 /**
- * Barre d'actions mobile : apparaît après la photo d'accueil,
+ * Barre d'actions mobile (Itinéraire, Appeler ; la pastille WhatsApp est juste à côté) :
+ * apparaît après la photo d'accueil,
  * se retire près du pied de page pour ne jamais masquer de contenu utile.
  */
 export function MobileActionBar() {
@@ -40,22 +40,16 @@ export function MobileActionBar() {
     >
       <ul className="flex divide-x divide-ivory/15">
         <li className="flex flex-1">
-          <a href={telHref} className={item} tabIndex={visible ? 0 : -1}>
-            <Phone size={18} aria-hidden="true" />
-            Appeler
-          </a>
-        </li>
-        <li className="flex flex-1">
-          <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className={item} tabIndex={visible ? 0 : -1}>
+          <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className={`${item} rounded-l-full bg-mucho`} tabIndex={visible ? 0 : -1}>
             <Navigation size={18} aria-hidden="true" />
             Itinéraire
           </a>
         </li>
         <li className="flex flex-1">
-          <Link href="/#carte" className={`${item} rounded-r-full bg-mucho`} tabIndex={visible ? 0 : -1}>
-            <BookOpen size={18} aria-hidden="true" />
-            La carte
-          </Link>
+          <a href={telHref} className={item} tabIndex={visible ? 0 : -1}>
+            <Phone size={18} aria-hidden="true" />
+            Appeler
+          </a>
         </li>
       </ul>
     </nav>

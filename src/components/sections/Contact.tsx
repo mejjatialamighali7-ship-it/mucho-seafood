@@ -1,6 +1,7 @@
-import { ArrowUpRight, Navigation, Phone, Clock, MapPin, ShoppingBag, MessageCircle } from "lucide-react";
+import { ArrowUpRight, Phone, Clock, MapPin, ShoppingBag } from "lucide-react";
 import { restaurant } from "@/config/restaurant";
-import { telHref, directionsUrl, deliveryUrl, fullAddress, hoursLabel, whatsappHref } from "@/lib/links";
+import { telHref, deliveryUrl, fullAddress, hoursLabel } from "@/lib/links";
+import { ActionButtons } from "@/components/ui/ActionButtons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { MapEmbed } from "./MapEmbed";
@@ -65,41 +66,18 @@ export function Contact() {
               </div>
             </address>
 
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className="btn btn-brand">
-                <Navigation size={16} aria-hidden="true" />
-                Nous trouver
-              </a>
-              <a href={telHref} className="btn btn-ghost-dark">
-                <Phone size={16} aria-hidden="true" />
-                Appeler
-              </a>
-              {whatsappHref("Bonjour Mucho, ") ? (
-                <a href={whatsappHref("Bonjour Mucho, ")!} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-dark">
-                  <MessageCircle size={16} aria-hidden="true" />
-                  WhatsApp
-                </a>
-              ) : null}
-            </div>
+            <ActionButtons className="mt-10" />
 
             {deliveryUrl ? (
-              <a
-                href={deliveryUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group mt-12 flex items-center justify-between gap-6 bg-abyss p-7 text-ivory transition-colors hover:bg-ocean"
-              >
-                <span className="flex items-center gap-5">
-                  <ShoppingBag size={26} strokeWidth={1.4} aria-hidden="true" className="text-copper-light" />
-                  <span>
-                    <span className="block font-serif text-2xl">Mucho sur {restaurant.delivery.provider}</span>
-                    <span className="mt-1 block text-sm text-ivory/70">
-                      Commandez vos plats via l&apos;application {restaurant.delivery.provider}
-                    </span>
-                  </span>
-                </span>
-                <ArrowUpRight size={22} aria-hidden="true" className="shrink-0 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </a>
+              <p className="mt-8 flex items-center gap-2 text-sm text-muted">
+                <ShoppingBag size={16} strokeWidth={1.5} aria-hidden="true" className="text-mucho" />
+                Aussi sur{" "}
+                <a href={deliveryUrl} target="_blank" rel="noopener noreferrer" className="link-underline inline-flex items-center gap-1 text-abyss">
+                  {restaurant.delivery.provider}
+                  <ArrowUpRight size={14} aria-hidden="true" />
+                  <span className="sr-only">(nouvel onglet)</span>
+                </a>
+              </p>
             ) : null}
           </Reveal>
 

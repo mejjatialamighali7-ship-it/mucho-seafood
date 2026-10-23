@@ -63,9 +63,9 @@ export function Signatures() {
                 <p className="mt-6 font-serif text-2xl text-sand">{formatPrice(hero.price)}</p>
               ) : null}
               <Reveal delay={240}>
-                <Link href="/#carte" className="btn btn-ghost-light mt-10">
+                <Link href="/#carte" className="link-underline mt-10 inline-flex items-center gap-2 text-sm tracking-wide text-ivory/85 hover:text-ivory">
                   Voir la carte
-                  <ArrowRight size={16} aria-hidden="true" />
+                  <ArrowRight size={14} aria-hidden="true" />
                 </Link>
               </Reveal>
             </div>

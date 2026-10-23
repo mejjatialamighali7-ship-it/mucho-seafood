@@ -10,6 +10,7 @@ export const legal = {
   ifNumber: null as string | null, // Identifiant fiscal
   manager: null as string | null, // Responsable de la publication
   contactEmail: null as string | null,
-  host: null as string | null, // Hébergeur réel (ex. Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA)
+  // Hébergeur : Render (render.com/terms), serveurs à Francfort (render.yaml, region: frankfurt).
+  host: "Render Services, Inc., 525 Brannan Street, Suite 300, San Francisco, CA 94107, États-Unis. Serveurs situés à Francfort (Allemagne)." as string | null,
   lastUpdated: "2026-10-23",
 };

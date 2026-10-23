@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
-import { TakeawayButtons } from "@/components/ui/TakeawayButtons";
+import { ActionButtons } from "@/components/ui/ActionButtons";
 import { PageShell } from "@/components/layout/PageShell";
 import { DishList } from "@/components/ui/DishList";
 import { publishedMenu, officialMenuUrl } from "@/data/menu";
@@ -8,12 +8,23 @@ import { menuJsonLd } from "@/lib/schema";
 import { deliveryUrl } from "@/lib/links";
 import { restaurant } from "@/config/restaurant";
 
+const title = "La carte — poissons, fruits de mer, paellas et tajines";
+const description =
+  "La carte de Mucho Seafood à El Jadida : Friture Mucho, Seafood Boil, marmite de fruits de mer, poissons grillés, crevettes pil-pil, tajines de la mer, pâtes, pizzas, desserts et jus frais.";
+
 export const metadata: Metadata = {
-  title: "La carte — poissons, fruits de mer, paellas et tajines",
-  description:
-    "La carte de Mucho Seafood à El Jadida : Friture Mucho, Seafood Boil, marmite de fruits de mer, poissons grillés, crevettes pil-pil, tajines de la mer, pâtes, pizzas, desserts et jus frais.",
+  title,
+  description,
   alternates: { canonical: "/carte" },
-  openGraph: { url: "/carte" },
+  openGraph: {
+    type: "website",
+    locale: "fr_MA",
+    siteName: "Mucho Seafood",
+    url: "/carte",
+    title: `${title} · Mucho Seafood El Jadida`,
+    description,
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Plateau de fruits de mer face à l'océan, chez Mucho à El Jadida" }],
+  },
 };
 
 export default function CartePage() {
@@ -76,12 +87,13 @@ export default function CartePage() {
               </>
             ) : null}
           </p>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <TakeawayButtons />
+          <div className="flex flex-col gap-5 sm:flex-row sm:flex-wrap sm:items-center">
+            <ActionButtons />
             {deliveryUrl ? (
-              <a href={deliveryUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-dark">
-                Commander sur {restaurant.delivery.provider}
-                <ArrowUpRight size={16} aria-hidden="true" />
+              <a href={deliveryUrl} target="_blank" rel="noopener noreferrer" className="link-underline inline-flex items-center gap-1 self-start text-sm text-muted hover:text-abyss sm:self-center">
+                Aussi sur {restaurant.delivery.provider}
+                <ArrowUpRight size={14} aria-hidden="true" />
+                <span className="sr-only">(nouvel onglet)</span>
               </a>
             ) : null}
           </div>

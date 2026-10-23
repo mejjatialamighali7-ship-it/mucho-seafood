@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import { restaurant } from "@/config/restaurant";
+import { ActionButtons } from "@/components/ui/ActionButtons";
 
 /**
  * Accueil éditorial : sur mobile, la photo occupe le haut de l'écran et le titre
@@ -27,7 +28,7 @@ export function Hero() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-abyss via-abyss/10 to-abyss/45 lg:bg-gradient-to-r lg:from-abyss lg:via-transparent lg:to-transparent" />
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-abyss/60 to-transparent" />
-        <p className="absolute right-5 bottom-6 hidden text-[0.65rem] tracking-[0.3em] text-ivory/80 uppercase sm:block lg:right-8 lg:bottom-8">
+        <p className="absolute right-24 bottom-8 hidden text-[0.65rem] tracking-[0.3em] text-ivory/80 uppercase sm:block lg:right-28 lg:bottom-10">
           Vue sur l&apos;océan · Route de Casablanca
         </p>
       </div>
@@ -57,13 +58,14 @@ export function Hero() {
         >
           {restaurant.baseline}
         </p>
-        <div className="hero-rise mt-9 flex flex-col gap-3 sm:flex-row" style={{ ["--d" as string]: "800ms" }}>
-          <Link href="/#carte" className="btn btn-light">
+        <div className="hero-rise mt-9" style={{ ["--d" as string]: "800ms" }}>
+          <ActionButtons tone="light" />
+          <Link
+            href="/#carte"
+            className="link-underline mt-6 inline-flex items-center gap-2 text-sm tracking-wide text-ivory/85 hover:text-ivory"
+          >
             Découvrir la carte
-            <ArrowRight size={16} aria-hidden="true" />
-          </Link>
-          <Link href="/#contact" className="btn btn-ghost-light">
-            Nous trouver
+            <ArrowDown size={14} aria-hidden="true" />
           </Link>
         </div>
 
