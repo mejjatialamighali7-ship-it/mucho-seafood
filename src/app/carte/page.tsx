@@ -31,7 +31,7 @@ export default function CartePage() {
   const anyPrice = publishedMenu.some((c) => c.dishes.some((d) => d.price?.verified));
   return (
     <PageShell
-      kicker="Mucho Seafood · El Jadida"
+      kicker="Mucho Seafood Restaurant El Jadida"
       title={
         <>
           La carte <em className="text-sand">de la mer.</em>
