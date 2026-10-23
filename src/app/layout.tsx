@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     title,
     description,
     url: "/",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Plateau de fruits de mer face à l'océan, chez Mucho à El Jadida" }],
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Le Seafood Boil de Mucho, face à l'océan à El Jadida" }],
   },
   twitter: { card: "summary_large_image", title, description, images: ["/og-image.jpg"] },
   formatDetection: { telephone: false },

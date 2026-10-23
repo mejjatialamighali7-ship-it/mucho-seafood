@@ -54,8 +54,8 @@ export const gallery: GalleryItem[] = [
   },
   {
     src: "/images/fruits-de-mer-riz-vue-mer.webp",
-    alt: "Plateau de fruits de mer sur riz blanc avec crevettes, crabe et moules, sauce à part, la plage et l'océan derrière la vitre",
-    caption: "Fruits de mer et riz, côté océan",
+    alt: "Seafood Boil de Mucho : crevettes, crabe et moules sur riz, sauce Old Bay à part, la plage et l'océan derrière la vitre",
+    caption: "Seafood Boil, notre plat phare",
     width: 1360,
     height: 1020,
   },
@@ -95,10 +95,10 @@ export const gallery: GalleryItem[] = [
     height: 1020,
   },
   {
-    src: "/images/detail-crevettes.webp",
-    alt: "Gros plan sur des crevettes frites dorées",
-    caption: "Crevettes, en détail",
-    width: 295,
-    height: 340,
+    src: "/images/plateau-poisson-grille.webp",
+    alt: "Grand plateau de poisson entier grillé aux herbes, garni de crevettes, moules et tomates cerises, avec légumes sautés, citron et deux poêlons de purée",
+    caption: "Poisson grillé et fruits de mer",
+    width: 1000,
+    height: 1758,
   },
 ];

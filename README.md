@@ -80,7 +80,7 @@ Les photos sources sont dans `assets-src/` (fichiers d'origine fournis par le re
 4. Pour la galerie, ajoutez une entrée dans `src/data/gallery.ts` (chemin, texte alternatif, légende, dimensions).
 5. Pour illustrer un plat, ajoutez `image` et `imageAlt` au plat dans `src/data/menu.ts`.
 
-Photos actuellement utilisées : logo officiel, salle avec vue sur l'océan, Friture Mucho, pâtes aux fruits de mer vue plage, plateau de fruits de mer et riz, six photos Instagram du restaurant (captures recadrées, préfixe `ig-` : linguine, palourdes, poisson grillé, poisson-purée-légumes, deux fritures), plus deux recadrages « détail » (crevettes, tissu des fauteuils). Les photos de la carte imprimée sont gardées dans `assets-src/` pour référence. Les photos actuelles font 765 à 1360 px de large : des photos en plus haute définition rendront l'accueil encore plus net sur grand écran.
+Photos actuellement utilisées : logo officiel, salle avec vue sur l'océan, Friture Mucho, pâtes aux fruits de mer vue plage, **Seafood Boil** face à l'océan (fichier `fruits-de-mer-riz-vue-mer`, photo d'accueil et plat phare des signatures), plateau de poisson grillé et fruits de mer (`plateau-poisson-grille`, envoyé le 23/10/2026), six photos Instagram du restaurant (captures recadrées, préfixe `ig-` : linguine, palourdes, poisson grillé, poisson-purée-légumes, deux fritures), plus un recadrage « détail » (tissu des fauteuils). Les photos de la carte imprimée sont gardées dans `assets-src/` pour référence. Les photos actuelles font 765 à 1360 px de large : des photos en plus haute définition rendront l'accueil encore plus net sur grand écran.
 
 ## 4. Pas de réservation : sur place, à emporter, WhatsApp
 
@@ -155,7 +155,7 @@ Après la mise en ligne : déclarez `https://votre-domaine/sitemap.xml` dans Goo
 - Informations légales : raison sociale, forme juridique, RC, ICE, IF, responsable de publication, e-mail de contact (affichés « À compléter » dans les mentions légales tant qu'ils manquent).
 - Identifiant Google Analytics (`G-…`) si vous voulez les statistiques de visite.
 - Relecture des CGU et de la page Confidentialité & RGPD (modèles prudents, à faire valider si besoin par votre conseil).
-- Photos en haute définition, notamment du Seafood Boil, de la Grillade mixte et de la Marmite (présentées pour l'instant en version typographique).
+- Photos en haute définition, notamment de la Grillade mixte et de la Marmite (présentées pour l'instant en version typographique).
 - Avis clients authentiques à citer, avec leur source et leur date (la section est masquée tant qu'il n'y en a pas).
 
 ## 8. Structure

@@ -23,10 +23,11 @@ const instagram = [
   { name: "ig-linguine-fruits-de-mer", region: { left: 0, top: 190, width: 1206, height: 2136 } },
   { name: "ig-poisson-puree-legumes", region: { left: 0, top: 640, width: 1206, height: 1236 } },
   { name: "ig-friture-aneth", region: { left: 0, top: 190, width: 1206, height: 2136 } },
+  // Capture envoyée par le restaurant le 23/10/2026 (barre d'état et bas d'écran retirés).
+  { name: "plateau-poisson-grille", region: { left: 0, top: 200, width: 1206, height: 2120 } },
 ];
 
 const details = [
-  { from: "friture-mucho", out: "detail-crevettes", region: { left: 470, top: 360, width: 295, height: 340 } },
   { from: "salle-vue-mer", out: "detail-fauteuil", region: { left: 600, top: 380, width: 340, height: 300 } },
 ];
 

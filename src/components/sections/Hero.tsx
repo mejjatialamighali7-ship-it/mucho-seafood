@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown } from "lucide-react";
 import { restaurant } from "@/config/restaurant";
-import { ActionButtons } from "@/components/ui/ActionButtons";
 
 /**
  * Accueil éditorial : sur mobile, la photo occupe le haut de l'écran et le titre
@@ -18,7 +17,7 @@ export function Hero() {
       <div className="relative h-[58svh] min-h-[22rem] overflow-hidden lg:order-2 lg:col-span-7 lg:h-auto">
         <Image
           src="/images/fruits-de-mer-riz-vue-mer.webp"
-          alt="Plateau de fruits de mer sur riz — crevettes, crabe, moules — servi face à la plage et à l'océan d'El Jadida"
+          alt="Le Seafood Boil, plat phare de Mucho : crevettes, crabe et moules sur riz, sauce Old Bay, servi face à la plage et à l'océan d'El Jadida"
           fill
           priority
           fetchPriority="high"
@@ -59,13 +58,9 @@ export function Hero() {
           {restaurant.baseline}
         </p>
         <div className="hero-rise mt-9" style={{ ["--d" as string]: "800ms" }}>
-          <ActionButtons tone="light" />
-          <Link
-            href="/#carte"
-            className="link-underline mt-6 inline-flex items-center gap-2 text-sm tracking-wide text-ivory/85 hover:text-ivory"
-          >
+          <Link href="/#carte" className="btn btn-light">
             Découvrir la carte
-            <ArrowDown size={14} aria-hidden="true" />
+            <ArrowDown size={16} aria-hidden="true" />
           </Link>
         </div>
 

@@ -99,7 +99,8 @@ ok((await fetch(BASE + "/page-inexistante")).status === 404, "Page inconnue → 
 
   // Un seul bloc d'action : les seuls boutons-liens sont Itinéraire, WhatsApp, Appeler
   const ctas = await page.$$eval("main a.btn, header a.btn", (as) => [...new Set(as.map((a) => a.textContent.replace(/\(.*\)/, "").trim()))]);
-  ok(ctas.every((t) => ["Itinéraire", "WhatsApp", "Appeler"].includes(t)), `Un seul bloc d'action (${ctas.join(", ")})`);
+  ok(ctas.every((t) => ["Itinéraire", "WhatsApp", "Appeler", "Découvrir la carte"].includes(t)), `Boutons d'action limités (${ctas.join(", ")})`);
+  ok((await page.$$eval("#hero-title ~ div a.btn", (as) => as.map((a) => a.textContent.trim()))).join() === "Découvrir la carte", "Accueil : un seul bouton « Découvrir la carte »");
   const text = (await page.textContent("body")).toLowerCase();
   ok(!text.includes("livraison") && !text.includes("05 23 80 08 33"), "Ni « livraison » ni ancien numéro dans la page");
   ok(await page.$('footer a[href="/cgu"]') && await page.$('footer a[href="/confidentialite"]'), "Pied de page : CGU et Confidentialité & RGPD");

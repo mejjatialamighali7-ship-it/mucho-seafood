@@ -52,19 +52,22 @@ export const menu: MenuCategory[] = [
     kicker: "À partager",
     dishes: [
       {
+        id: "seafood-boil",
+        name: "Seafood Boil",
+        description:
+          "Notre plat phare. Gambas, palourdes, moules, poulpe, œuf dur, maïs, riz basmati et potatoes, relevés à la sauce Old Bay, que l'on ne trouve qu'aux États-Unis. Classique, crabe, langouste, crevettes royales ou homard.",
+        price: from(235),
+        image: "/images/fruits-de-mer-riz-vue-mer.webp",
+        imageAlt: "Seafood Boil de Mucho : crevettes, crabe et moules sur riz, sauce Old Bay à part, servi face à la plage et à l'océan d'El Jadida",
+        signature: true,
+      },
+      {
         id: "friture-mucho",
         name: "Friture Mucho",
         description: "Soles, merlans, calamars et crevettes, poisson blanc et croquettes de poisson.",
         price: dh(120),
         image: "/images/friture-mucho.webp",
         imageAlt: "Grand plat de friture : filets de poisson dorés, crevettes, anneaux de calamar, citron et sauce blanche",
-        signature: true,
-      },
-      {
-        id: "seafood-boil",
-        name: "Seafood Boil",
-        description: "Gambas, palourdes, moules, poulpe, œuf dur, maïs, riz basmati, potatoes et sauce Old Bay. Classique, crabe, langouste, crevettes royales ou homard.",
-        price: from(235),
         signature: true,
       },
       {
@@ -129,7 +132,7 @@ export const menu: MenuCategory[] = [
     id: "seafood-boil",
     title: "Seafood Boil",
     kicker: "Le grand partage",
-    note: "Gambas, palourdes, moules, poulpe, œuf dur, maïs, riz basmati, potatoes, sauce Old Bay. Pour 1 à 2 personnes ou 3 à 4 personnes.",
+    note: "Notre plat phare. Gambas, palourdes, moules, poulpe, œuf dur, maïs, riz basmati, potatoes, sauce Old Bay (que l'on ne trouve qu'aux États-Unis). Pour 1 à 2 personnes ou 3 à 4 personnes.",
     dishes: [
       { id: "boil-classique", name: "Classique", variants: [{ label: "1 à 2 pers.", price: dh(235) }, { label: "3 à 4 pers.", price: dh(460) }] },
       { id: "boil-crabe", name: "Crabe", variants: [{ label: "1 à 2 pers.", price: dh(285) }, { label: "3 à 4 pers.", price: dh(560) }] },
