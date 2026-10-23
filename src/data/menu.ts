@@ -11,7 +11,7 @@
  *
  * `group`    regroupe des plats sous un intertitre dans une même catégorie.
  * `variants` affiche plusieurs prix pour un même plat (ex. tailles du Seafood Boil).
- * `from(…)`  affiche « dès … Dh » (utile pour un plat signature à plusieurs tailles).
+ * `from(…)`  affiche « à partir de … Dh » (utile pour un plat signature à plusieurs tailles).
  */
 
 export type Price = { amount: number; verified: boolean; from?: boolean; source?: string };
@@ -278,7 +278,7 @@ export const publishedMenu: MenuCategory[] = menu
   .filter((c) => c.dishes.length > 0);
 
 export const formatPrice = (p?: Price) =>
-  p && p.verified ? `${p.from ? "dès " : ""}${p.amount.toLocaleString("fr-MA")} Dh` : null;
+  p && p.verified ? `${p.from ? "à partir de " : ""}${p.amount.toLocaleString("fr-MA")} Dh` : null;
 
 /** Carte officielle téléchargeable (PDF dans /public). Mettre null pour masquer le lien. */
 export const officialMenuUrl: string | null = "/carte-mucho.pdf";

@@ -64,7 +64,7 @@ Toute la carte vient de la **carte officielle** transmise par le restaurant (PDF
 
 - **Ajouter un plat** : copiez une ligne dans la bonne catégorie et changez `id` (unique) et `name`.
 - **Retirer un plat** : supprimez la ligne, ou ajoutez `available: false` pour le masquer temporairement.
-- **Changer un prix** : modifiez le nombre dans `dh(…)`. `from(235)` affiche « dès 235 Dh ».
+- **Changer un prix** : modifiez le nombre dans `dh(…)`. `from(235)` affiche « à partir de 235 Dh ».
 - **Plusieurs tailles** : `variants: [{ label: "1 à 2 pers.", price: dh(235) }, …]` (utilisé pour le Seafood Boil).
 - **Intertitres** : `group: "Jus frais"` range un plat sous un intertitre ; `note` sur une catégorie affiche une mention (ex. « Garnitures selon l'humeur du chef »).
 - **Plat signature** : `signature: true` le place dans la section « Plats signatures ». Le premier plat signature qui a une photo est mis en scène en grand.
@@ -84,7 +84,7 @@ Photos actuellement utilisées : logo officiel ; **la salle face à la baie vitr
 
 ### Vidéos
 
-La section « De la vitrine à la table » affiche les vidéos de `public/videos/` (liste et légendes dans `src/data/videos.ts`). Chaque vidéo est compressée en 540 × 960 px, sans son, environ 1 Mo, avec une image d'attente `.webp` du même nom. Rien n'est téléchargé avant que le visiteur arrive sur la section ; chaque vidéo démarre quand elle est à l'écran et s'arrête quand elle en sort ; un toucher met en pause ou relance. Pas de lecture automatique si le visiteur a demandé moins d'animations ou le mode économie de données.
+La section « De l'océan à la table » affiche les vidéos de `public/videos/` (liste et légendes dans `src/data/videos.ts`). Chaque vidéo est compressée en 540 × 960 px, sans son, environ 1 Mo, avec une image d'attente `.webp` du même nom. Rien n'est téléchargé avant que le visiteur arrive sur la section ; chaque vidéo démarre quand elle est à l'écran et s'arrête quand elle en sort ; un toucher met en pause ou relance. Pas de lecture automatique si le visiteur a demandé moins d'animations ou le mode économie de données.
 
 Pour ajouter une vidéo (format vertical de préférence) :
 

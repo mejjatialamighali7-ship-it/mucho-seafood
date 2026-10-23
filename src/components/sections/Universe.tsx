@@ -53,7 +53,7 @@ export function Universe() {
           <Reveal as="p" delay={200} className="mt-8 max-w-md text-[1.05rem] leading-relaxed text-muted">
             À l&apos;étage d&apos;une villa de la route de Casablanca, la salle de Mucho s&apos;ouvre en grand sur
             l&apos;océan. On y vient pour les fritures dorées, les grillades, les paellas, les tajines de la mer et les
-            pâtes aux fruits de mer&nbsp;: une cuisine marine pensée pour être partagée.
+            pâtes aux fruits de mer&nbsp;: une cuisine de la mer pensée pour être partagée.
           </Reveal>
 
           <ul className="mt-12 space-y-6 border-t border-ink/10 pt-10">

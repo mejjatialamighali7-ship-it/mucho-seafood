@@ -12,7 +12,7 @@ export function Videos() {
               kicker="En vidéo"
               title={
                 <>
-                  De la vitrine <em className="text-mucho">à la table.</em>
+                  De l&apos;océan <em className="text-mucho">à la table.</em>
                 </>
               }
               intro="Les poissons et fruits de mer en vitrine, les cassolettes qui sortent de cuisine et la salle face à l'océan, filmés chez Mucho."

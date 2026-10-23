@@ -21,7 +21,7 @@ export function MenuSection() {
             kicker="La carte"
             title={
               <>
-                Poissons, fruits de mer <em className="text-mucho">& cuisine marine.</em>
+                Poissons, fruits de mer <em className="text-mucho">& cuisine de la mer.</em>
               </>
             }
             intro="Fritures, grillades, seafood boil, tajines de la mer, coquillages, pâtes et pizzas : un aperçu de la carte, à parcourir par envie."
