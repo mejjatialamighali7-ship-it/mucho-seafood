@@ -24,7 +24,7 @@ export const restaurant = {
   baseline: "Poissons, fruits de mer et cuisine de la mer à partager au cœur d'El Jadida.",
 
   /** Domaine public — défini par la variable d'environnement NEXT_PUBLIC_SITE_URL. */
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://muchoseafoodrestaurant.ma",
 
   address: {
     value: {
