@@ -34,7 +34,15 @@ const securityHeaders = [
 
 const isProd = process.env.NODE_ENV === "production";
 
+/**
+ * Le site est publié en « Static Site » sur Render : `next build` produit des
+ * fichiers HTML/CSS/JS dans `out/`, servis tels quels par le CDN de Render.
+ * En mode export, Next.js n'applique ni `headers()` ni `redirects()` : les en-têtes
+ * de sécurité et les redirections sont déclarés dans render.yaml (même contenu).
+ * On les garde ici pour `next dev`.
+ */
 const nextConfig: NextConfig = {
+  output: isProd ? "export" : undefined,
   images: {
     // Les photos sont préparées à l'avance en WebP et en 3 largeurs par `npm run images`.
     // Le chargeur choisit la bonne largeur sans aucun calcul côté serveur (rapide sur Render).
@@ -44,10 +52,13 @@ const nextConfig: NextConfig = {
     imageSizes: [96, 256],
   },
   poweredByHeader: false,
-  async headers() {
+  ...(isProd ? {} : { headers, redirects }),
+};
+
+async function headers() {
     return [
       // La CSP bloquerait le rechargement à chaud en développement.
-      { source: "/:path*", headers: isProd ? securityHeaders : securityHeaders.slice(1) },
+      { source: "/:path*", headers: securityHeaders.slice(1) },
       {
         source: "/:dir(images|videos)/:file*",
         headers: [{ key: "Cache-Control", value: "public, max-age=2592000, stale-while-revalidate=86400" }],
@@ -57,14 +68,14 @@ const nextConfig: NextConfig = {
         headers: [{ key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=86400" }],
       },
     ];
-  },
-  async redirects() {
+}
+
+async function redirects() {
     return [
       { source: "/rgpd", destination: "/confidentialite", permanent: true },
       { source: "/cookies", destination: "/confidentialite#cookies", permanent: true },
       { source: "/conditions-generales", destination: "/cgu", permanent: true },
     ];
-  },
-};
+}
 
 export default nextConfig;

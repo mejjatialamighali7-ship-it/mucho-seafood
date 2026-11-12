@@ -1,21 +1,78 @@
-# Déploiement sur Render (Blueprint) : Render lit ce fichier quand on crée
-# le service via « New > Blueprint » et en sélectionnant ce dépôt.
+# Déploiement sur Render (Blueprint) : site STATIQUE (gratuit, servi par le CDN de Render).
+# `next build` exporte le site en fichiers HTML dans out/ (output: "export" dans next.config.ts).
+# Les en-têtes de sécurité et les redirections, que Next.js n'applique pas en mode export,
+# sont déclarés ici.
 services:
   - type: web
-    name: mucho-seafood
-    runtime: node
-    region: frankfurt
-    plan: starter
+    runtime: static
+    name: mucho-seafood-static
     buildCommand: npm ci && npm run build
-    startCommand: npm start
-    healthCheckPath: /
+    staticPublishPath: ./out
     autoDeploy: true
+    pullRequestPreviewsEnabled: false
     envVars:
       - key: NODE_VERSION
         value: "22"
       - key: NEXT_TELEMETRY_DISABLED
         value: "1"
-      # Adresse définitive du site (ex. https://www.mucho-eljadida.ma).
-      # À saisir dans Render ; laissez vide tant qu'il n'y a pas de domaine.
+      # Adresse définitive du site (utilisée dans le sitemap, robots.txt, les balises SEO).
       - key: NEXT_PUBLIC_SITE_URL
-        sync: false
+        value: https://muchoseafoodrestaurant.ma
+    routes:
+      # Anciennes adresses → pages actuelles
+      - type: redirect
+        source: /rgpd
+        destination: /confidentialite
+      - type: redirect
+        source: /cookies
+        destination: /confidentialite#cookies
+      - type: redirect
+        source: /conditions-generales
+        destination: /cgu
+      # Adresses sans « .html » (la route /carte est imprimée dans le QR code du menu : ne jamais la retirer)
+      - type: rewrite
+        source: /carte
+        destination: /carte.html
+      - type: rewrite
+        source: /cgu
+        destination: /cgu.html
+      - type: rewrite
+        source: /confidentialite
+        destination: /confidentialite.html
+      - type: rewrite
+        source: /mentions-legales
+        destination: /mentions-legales.html
+    headers:
+      - path: /*
+        name: Content-Security-Policy
+        value: "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; font-src 'self'; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; frame-src https://maps.google.com https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+      - path: /*
+        name: Strict-Transport-Security
+        value: max-age=63072000; includeSubDomains
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /*
+        name: Permissions-Policy
+        value: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+      - path: /*
+        name: Cross-Origin-Opener-Policy
+        value: same-origin
+      - path: /images/*
+        name: Cache-Control
+        value: public, max-age=2592000, stale-while-revalidate=86400
+      - path: /videos/*
+        name: Cache-Control
+        value: public, max-age=2592000, stale-while-revalidate=86400
+      - path: /og-image.jpg
+        name: Cache-Control
+        value: public, max-age=604800, stale-while-revalidate=86400
+      - path: /carte-mucho.pdf
+        name: Cache-Control
+        value: public, max-age=604800, stale-while-revalidate=86400
